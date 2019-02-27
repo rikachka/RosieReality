@@ -6,21 +6,43 @@ public class Tile : MonoBehaviour
 {
     public enum Type { EMPTY, PLAYER1, PLAYER2, START, END }
 
-    public Sprite[] imgs;
+    public Sprite[] imgs_types;
+    public Sprite[] imgs_directions;
 
     public Type img_type = 0;
 
+    GameObject last_direction_tile;
+
+    List<MoveTile.Direction> directions;
+
+    public void AddDirection(MoveTile.Direction direction)
+    {
+        directions.Add(direction);
+    }
+
     void ChangeImg()
     {
-        if (imgs.Length > (int)img_type)
+        if (imgs_types.Length > (int)img_type)
         {
-            GetComponent<SpriteRenderer>().sprite = imgs[(int)img_type];
+            GetComponent<SpriteRenderer>().sprite = imgs_types[(int)img_type];
+        }
+
+        if (directions.Count == 0)
+        {
+            last_direction_tile.GetComponent<SpriteRenderer>().sprite = null;
+        }
+        else
+        {
+            MoveTile.Direction last_direction = directions[directions.Count - 1];
+            last_direction_tile.GetComponent<SpriteRenderer>().sprite = imgs_directions[(int)last_direction];
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        directions = new List<MoveTile.Direction>();
+        last_direction_tile = transform.Find("LastDirection").gameObject;
         ChangeImg();
     }
 

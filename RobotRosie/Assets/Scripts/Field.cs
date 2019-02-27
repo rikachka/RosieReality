@@ -9,6 +9,7 @@ public class Field : MonoBehaviour
     public GameObject moves_panel_player_1, moves_panel_player_2;
 
     GameObject[,] field;
+    GameObject[,,] moves;
     Tile.Type[,] tiles_types = 
     { 
         { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.END },
@@ -20,11 +21,13 @@ public class Field : MonoBehaviour
 
     int size = 5;
     float step_factor = 1.1F;
+    int MAX_MOVES = 5;
 
     void CreateField()
     {
         Vector3 left_top_coords = transform.position;
         field = new GameObject[size, size];
+        moves = new GameObject[size, size, MAX_MOVES];
 
         for (int y = 0; y < size; y++)
         {
@@ -61,7 +64,8 @@ public class Field : MonoBehaviour
         MoveTile.Direction direction = moves_panel.TakeActiveMoveTile();
         if (direction != MoveTile.Direction.NO_DIRECTION)
         {
-            field[y, x].GetComponent<Tile>().img_type = Tile.Type.END;
+            field[y, x].GetComponent<Tile>().AddDirection(direction);
+            //field[y, x].GetComponent<Tile>().img_type = Tile.Type.END;
         }
     }
 
