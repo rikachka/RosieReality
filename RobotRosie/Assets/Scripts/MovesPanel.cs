@@ -6,11 +6,11 @@ public class MovesPanel : MonoBehaviour
 {
     struct MovesInfo
     {
-        public MoveDirection move_direction;
+        public MoveTile.Direction move_direction;
         public int number_max; 
         public int number_available;
 
-        public MovesInfo(MoveDirection move_direction_, int number_max_, int number_available_)
+        public MovesInfo(MoveTile.Direction move_direction_, int number_max_, int number_available_)
         {
             move_direction = move_direction_;
             number_max = number_max_;
@@ -18,22 +18,19 @@ public class MovesPanel : MonoBehaviour
         }
     }
 
-    public enum MoveDirection { FORWARD, LEFT, RIGHT }
-
     public GameObject init_move_with_counter;
-    public int player;
+    public MoveTile.Type default_move_tile_type;
 
     GameObject[] panel;
 
     const int NO_ACTIVE = -1;
-    const int ACTIVE_MOVE = 0;
     int active_in_panel = NO_ACTIVE;
 
     MovesInfo[] moves_info =
     {
-        new MovesInfo(MoveDirection.FORWARD, 5, 3),
-        new MovesInfo(MoveDirection.LEFT, 6, 2),
-        new MovesInfo(MoveDirection.RIGHT, 4, 4)
+        new MovesInfo(MoveTile.Direction.FORWARD, 5, 3),
+        new MovesInfo(MoveTile.Direction.LEFT, 6, 2),
+        new MovesInfo(MoveTile.Direction.RIGHT, 4, 4)
     };
 
     int size = 3;
@@ -50,8 +47,8 @@ public class MovesPanel : MonoBehaviour
             panel[y] = Instantiate(init_move_with_counter, coords, new Quaternion());
 
             MoveWithCounter move_with_counter = panel[y].GetComponent<MoveWithCounter>();
-            move_with_counter.move_type = player;
-            move_with_counter.move_direction = (int)moves_info[y].move_direction;
+            move_with_counter.move_type = default_move_tile_type;
+            move_with_counter.move_direction = moves_info[y].move_direction;
             move_with_counter.number_max = moves_info[y].number_max;
             move_with_counter.number_available = moves_info[y].number_available;
 
@@ -62,33 +59,42 @@ public class MovesPanel : MonoBehaviour
 
     public void Click(int y)
     {
+        if (panel[y].GetComponent<MoveWithCounter>().number_available <= 0)
+        {
+            return;
+        }
+
         if (active_in_panel == NO_ACTIVE)
         {
             active_in_panel = y;
-            panel[active_in_panel].GetComponent<MoveWithCounter>().move_type = ACTIVE_MOVE;
+            panel[active_in_panel].GetComponent<MoveWithCounter>().move_type = MoveTile.Type.ACTIVE;
+            return;
+        }
+
+        panel[active_in_panel].GetComponent<MoveWithCounter>().move_type = default_move_tile_type;
+        if (y == active_in_panel)
+        {
+            active_in_panel = NO_ACTIVE;
         }
         else
         {
-            panel[active_in_panel].GetComponent<MoveWithCounter>().move_type = player;
-            if (y == active_in_panel)
-            {
-                active_in_panel = NO_ACTIVE;
-            }
-            else
-            {
-                active_in_panel = y;
-                panel[active_in_panel].GetComponent<MoveWithCounter>().move_type = ACTIVE_MOVE;
-            }
+            active_in_panel = y;
+            panel[active_in_panel].GetComponent<MoveWithCounter>().move_type = MoveTile.Type.ACTIVE;
         }
     }
 
-    public void TakeActiveMoveTile()
+    public MoveTile.Direction TakeActiveMoveTile()
     {
         if (active_in_panel != NO_ACTIVE)
         {
-            panel[active_in_panel].GetComponent<MoveWithCounter>().number_available--;
+            MoveWithCounter move_with_counter = panel[active_in_panel].GetComponent<MoveWithCounter>();
+            MoveTile.Direction move_direction = move_with_counter.move_direction;
+            move_with_counter.number_available--;
+            move_with_counter.move_type = default_move_tile_type;
             active_in_panel = NO_ACTIVE;
+            return move_direction;
         }
+        return MoveTile.Direction.NO_DIRECTION;
     }
 
     // Start is called before the first frame update

@@ -30,9 +30,9 @@ public class Field : MonoBehaviour
         {
             for (int x = 0; x < size; x++)
             {
-                field[y, x] = Instantiate(init_tile);
+                Vector3 coords = new Vector3(left_top_coords.x + x * step_factor, left_top_coords.y - y * step_factor, left_top_coords.z);
+                field[y, x] = Instantiate(init_tile, coords, new Quaternion());
                 field[y, x].GetComponent<Tile>().img_type = tiles_types[y, x];
-                field[y, x].transform.position = new Vector3(left_top_coords.x + x * step_factor, left_top_coords.y - y * step_factor, left_top_coords.z);
 
                 field[y, x].GetComponent<TileClick>().parent = this.gameObject;
                 field[y, x].GetComponent<TileClick>().x = x;
@@ -46,7 +46,7 @@ public class Field : MonoBehaviour
         Tile tile = field[y, x].GetComponent<Tile>();
         MovesPanel moves_panel;
 
-        switch (tile.img_type) 
+        switch (tile.img_type)
         {
             case Tile.Type.PLAYER1:
                 moves_panel = moves_panel_player_1.GetComponent<MovesPanel>();
@@ -58,9 +58,11 @@ public class Field : MonoBehaviour
                 return;
         }
 
-        moves_panel.TakeActiveMoveTile();
-
-        field[y, x].GetComponent<Tile>().img_type = Tile.Type.END;
+        MoveTile.Direction direction = moves_panel.TakeActiveMoveTile();
+        if (direction != MoveTile.Direction.NO_DIRECTION)
+        {
+            field[y, x].GetComponent<Tile>().img_type = Tile.Type.END;
+        }
     }
 
     // Start is called before the first frame update

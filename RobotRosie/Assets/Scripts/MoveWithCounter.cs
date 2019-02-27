@@ -6,8 +6,8 @@ public class MoveWithCounter : MonoBehaviour
 {
     public enum CounterType { EMPTY, AVAILABLE }
 
-    public int move_type = 0;
-    public int move_direction = 0;
+    public MoveTile.Type move_type = 0;
+    public MoveTile.Direction move_direction = 0;
 
     public int number_max = 0;
     public int number_available = 0;

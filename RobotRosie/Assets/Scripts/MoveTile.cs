@@ -4,23 +4,26 @@ using UnityEngine;
 
 public class MoveTile : MonoBehaviour
 {
+    public enum Direction { NO_DIRECTION, FORWARD, LEFT, RIGHT }
+    public enum Type { ACTIVE, PLAYER1, PLAYER2 }
+
     public Sprite[] imgs_types;
     public Sprite[] imgs_directions;
 
-    public int type = 0;
-    public int direction = 0;
+    public Type type = 0;
+    public Direction direction = 0;
 
     GameObject back;
 
     void ChangeImg()
     {
-        if (imgs_types.Length > type)
+        if (imgs_types.Length > (int)type)
         {
-            back.GetComponent<SpriteRenderer>().sprite = imgs_types[type];
+            back.GetComponent<SpriteRenderer>().sprite = imgs_types[(int)type];
         }
-        if (imgs_directions.Length > direction)
+        if (imgs_directions.Length > (int)direction)
         {
-            GetComponent<SpriteRenderer>().sprite = imgs_directions[direction];
+            GetComponent<SpriteRenderer>().sprite = imgs_directions[(int)direction];
         }
     }
 

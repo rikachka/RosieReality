@@ -1,14 +1,13 @@
 ﻿<Properties StartupConfiguration="{239BBA5D-E66C-1961-1799-1C216ECA8E00}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MoveTile.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MoveTileClick.cs">
     <Files>
+      <File FileName="Assets/Scripts/MainGame.cs" Line="7" Column="65" />
+      <File FileName="Assets/Scripts/Field.cs" Line="18" Column="103" />
+      <File FileName="Assets/Scripts/MoveTile.cs" Line="16" Column="21" />
+      <File FileName="Assets/Scripts/MovesPanel.cs" Line="47" Column="84" />
+      <File FileName="Assets/Scripts/Tile.cs" Line="7" Column="18" />
       <File FileName="Assets/Scripts/MoveWithCounter.cs" Line="9" Column="25" />
-      <File FileName="Assets/Scripts/MoveTile.cs" Line="53" Column="6" />
-      <File FileName="Assets/Scripts/MovesPanel.cs" Line="54" Column="23" />
-      <File FileName="Assets/Scripts/MainGame.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Field.cs" Line="53" Column="6" />
-      <File FileName="Assets/Scripts/ClickTile.cs" Line="24" Column="6" />
-      <File FileName="Assets/Scripts/Tile.cs" Line="6" Column="2" />
-      <File FileName="Assets/Scripts/MoveTileClick.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/MoveTileClick.cs" Line="8" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
