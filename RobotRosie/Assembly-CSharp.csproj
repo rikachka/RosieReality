@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\MoveTile.cs" />
     <Compile Include="Assets\Scripts\MoveTileClick.cs" />
     <Compile Include="Assets\Scripts\MoveWithCounter.cs" />
+    <Compile Include="Assets\Scripts\Robot.cs" />
     <Compile Include="Assets\Scripts\Tile.cs" />
     <Compile Include="Assets\Scripts\TileClick.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">

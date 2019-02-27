@@ -13,6 +13,17 @@ public class Field : MonoBehaviour
     int size = 5;
     float step_factor = 1.1F;
 
+    struct Point
+    {
+        public int x, y;
+
+        public Point(int x_, int y_)
+        {
+            x = x_;
+            y = y_;
+        }
+    }
+
     public void CreateTestDirections()
     {
         List<MoveTile.Direction>[,] directions =
@@ -72,8 +83,14 @@ public class Field : MonoBehaviour
         {
             for (int x = 0; x < size; x++)
             {
-                field[y, x].GetComponent<Tile>().img_type = tiles_types[y, x];
-                field[y, x].GetComponent<Tile>().ClearDirections();
+                Tile tile = field[y, x].GetComponent<Tile>();
+                tile.img_type = tiles_types[y, x];
+                tile.ClearDirections();
+                if (tile.img_type == Tile.Type.START)
+                {
+                    //tile.ShowRobot();
+                    tile.is_robot_shown = true;
+                }
             }
         }
     }
@@ -130,8 +147,33 @@ public class Field : MonoBehaviour
         }
     }
 
+    Point FindStartTile()
+    {
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                if (field[y, x].GetComponent<Tile>().img_type == Tile.Type.START)
+                {
+                    return new Point(x, y);
+                }
+            }
+        }
+        throw new System.Exception("No start tile");
+    }
+
     public bool CheckWinningCondition()
     {
+        bool[,] visited = new bool[size, size];
+
+        Point point = FindStartTile();
+        //RobotDirection direction = RobotDirection.RIGHT;
+
+        while (!visited[point.y, point.x])
+        {
+            visited[point.y, point.x] = true;
+
+        }
         return true;
     }
 

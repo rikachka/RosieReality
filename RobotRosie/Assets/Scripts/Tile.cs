@@ -11,7 +11,10 @@ public class Tile : MonoBehaviour
 
     public Type img_type = 0;
 
-    GameObject last_direction_tile;
+    public bool is_robot_shown = false;
+
+    GameObject last_direction_tile; 
+    Robot robot;
 
     List<MoveTile.Direction> directions = new List<MoveTile.Direction>();
 
@@ -36,8 +39,32 @@ public class Tile : MonoBehaviour
         directions = new List<MoveTile.Direction>();
     }
 
+    public int MoveRobotThrough()
+    {
+        int direction_change = 0;
+        foreach (MoveTile.Direction direction in directions)
+        {
+            switch (direction)
+            {
+                case MoveTile.Direction.LEFT:
+                    direction_change++;
+                    break;
+                case MoveTile.Direction.RIGHT:
+                    direction_change--;
+                    break;
+                case MoveTile.Direction.FORWARD:
+                    return direction_change;
+                default:
+                    return -1;
+            }
+        }
+        return -1;
+    }
+
     void ChangeImg()
     {
+        robot.is_shown = is_robot_shown;
+
         if (imgs_types.Length > (int)img_type)
         {
             GetComponent<SpriteRenderer>().sprite = imgs_types[(int)img_type];
@@ -59,6 +86,8 @@ public class Tile : MonoBehaviour
     void Start()
     {
         last_direction_tile = transform.Find("LastDirection").gameObject;
+        robot = transform.Find("Robot").GetComponent<Robot>();
+
         ChangeImg();
     }
 

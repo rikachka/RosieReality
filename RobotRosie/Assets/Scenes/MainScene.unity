@@ -292,6 +292,11 @@ PrefabInstance:
       propertyPath: default_move_tile_type
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4804436769277533003, guid: ab34a927fbb7d4ff59edf40623ecc046,
+        type: 3}
+      propertyPath: are_counters_on_the_right
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab34a927fbb7d4ff59edf40623ecc046, type: 3}
 --- !u!1001 &1696217323
@@ -309,7 +314,7 @@ PrefabInstance:
     - target: {fileID: 4702880591521742351, guid: ab34a927fbb7d4ff59edf40623ecc046,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7
+      value: -4.5
       objectReference: {fileID: 0}
     - target: {fileID: 4702880591521742351, guid: ab34a927fbb7d4ff59edf40623ecc046,
         type: 3}
