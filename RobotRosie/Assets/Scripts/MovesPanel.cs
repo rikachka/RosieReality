@@ -25,6 +25,10 @@ public class MovesPanel : MonoBehaviour
 
     GameObject[] panel;
 
+    const int NO_ACTIVE = -1;
+    const int ACTIVE_MOVE = 0;
+    int active_in_panel = NO_ACTIVE;
+
     MovesInfo[] moves_info =
     {
         new MovesInfo(MoveDirection.FORWARD, 5, 3),
@@ -58,8 +62,24 @@ public class MovesPanel : MonoBehaviour
 
     public void Click(int y)
     {
-        //Debug.Log("Click in MovesPanel");
-        panel[y].GetComponent<MoveWithCounter>().move_type = 0;
+        if (active_in_panel == NO_ACTIVE)
+        {
+            active_in_panel = y;
+            panel[active_in_panel].GetComponent<MoveWithCounter>().move_type = ACTIVE_MOVE;
+        }
+        else
+        {
+            panel[active_in_panel].GetComponent<MoveWithCounter>().move_type = player;
+            if (y == active_in_panel)
+            {
+                active_in_panel = NO_ACTIVE;
+            }
+            else
+            {
+                active_in_panel = y;
+                panel[active_in_panel].GetComponent<MoveWithCounter>().move_type = ACTIVE_MOVE;
+            }
+        }
     }
 
     // Start is called before the first frame update
