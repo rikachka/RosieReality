@@ -217,6 +217,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -232,6 +233,21 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ca9a577bd6754802b2de7b9213904d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moves_panel_player_1: {fileID: 1774130052}
+  moves_panel_player_2: {fileID: 2035313113}
+  field: {fileID: 1933956446}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -436,6 +452,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab34a927fbb7d4ff59edf40623ecc046, type: 3}
+--- !u!1 &1774130052 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1258197863882998977, guid: ab34a927fbb7d4ff59edf40623ecc046,
+    type: 3}
+  m_PrefabInstance: {fileID: 1696217323}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1933956446 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4817435746869150321, guid: b437642cb292e4282b391c394be80628,
+    type: 3}
+  m_PrefabInstance: {fileID: 1999310713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1999310713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -513,8 +541,24 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4405635551683304317, guid: b437642cb292e4282b391c394be80628,
+        type: 3}
+      propertyPath: moves_panel_player_1
+      value: 
+      objectReference: {fileID: 1774130052}
+    - target: {fileID: 4405635551683304317, guid: b437642cb292e4282b391c394be80628,
+        type: 3}
+      propertyPath: moves_panel_player_2
+      value: 
+      objectReference: {fileID: 2035313113}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b437642cb292e4282b391c394be80628, type: 3}
+--- !u!1 &2035313113 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1258197863882998977, guid: ab34a927fbb7d4ff59edf40623ecc046,
+    type: 3}
+  m_PrefabInstance: {fileID: 1574794692}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2059297713
 PrefabInstance:
   m_ObjectHideFlags: 0

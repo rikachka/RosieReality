@@ -82,6 +82,15 @@ public class MovesPanel : MonoBehaviour
         }
     }
 
+    public void TakeActiveMoveTile()
+    {
+        if (active_in_panel != NO_ACTIVE)
+        {
+            panel[active_in_panel].GetComponent<MoveWithCounter>().number_available--;
+            active_in_panel = NO_ACTIVE;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {

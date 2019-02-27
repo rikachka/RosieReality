@@ -1,0 +1,2 @@
+/Users/rikachka/Информация/Internship/Angel.co/2019/RosieReality/2. Coding/RoboGame3/RosieReality/RobotRosie/obj/Debug/Assembly-CSharp.csprojAssemblyReference.cache
+/Users/rikachka/Информация/Internship/Angel.co/2019/RosieReality/2. Coding/RoboGame3/RosieReality/RobotRosie/obj/Debug/Assembly-CSharp.csproj.CoreCompileInputs.cache

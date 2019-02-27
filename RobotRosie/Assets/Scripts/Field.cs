@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
-    public enum TileType { EMPTY, PLAYER1, PLAYER2, START, END }
+    public GameObject init_tile;
 
-    public GameObject tile;
+    public GameObject moves_panel_player_1, moves_panel_player_2;
 
     GameObject[,] field;
-    TileType[,] tiles_types = 
+    Tile.Type[,] tiles_types = 
     { 
-        { TileType.PLAYER1, TileType.PLAYER2, TileType.PLAYER2, TileType.PLAYER2, TileType.END },
-        { TileType.PLAYER1, TileType.EMPTY, TileType.EMPTY, TileType.EMPTY, TileType.EMPTY },
-        { TileType.PLAYER1, TileType.PLAYER2, TileType.PLAYER2, TileType.PLAYER1, TileType.PLAYER2 },
-        { TileType.EMPTY, TileType.EMPTY, TileType.EMPTY, TileType.EMPTY, TileType.PLAYER1 },
-        { TileType.EMPTY, TileType.START, TileType.PLAYER2, TileType.PLAYER2, TileType.PLAYER1 },
+        { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.END },
+        { Tile.Type.PLAYER1, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY },
+        { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1, Tile.Type.PLAYER2 },
+        { Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.PLAYER1 },
+        { Tile.Type.EMPTY, Tile.Type.START, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1 },
     };
 
     int size = 5;
@@ -30,20 +30,37 @@ public class Field : MonoBehaviour
         {
             for (int x = 0; x < size; x++)
             {
-                field[y, x] = Instantiate(tile);
-                field[y, x].GetComponent<Tile>().img_type = (int)tiles_types[y, x];
+                field[y, x] = Instantiate(init_tile);
+                field[y, x].GetComponent<Tile>().img_type = tiles_types[y, x];
                 field[y, x].transform.position = new Vector3(left_top_coords.x + x * step_factor, left_top_coords.y - y * step_factor, left_top_coords.z);
 
-                field[y, x].GetComponent<ClickTile>().parent = this.gameObject;
-                field[y, x].GetComponent<ClickTile>().x = x;
-                field[y, x].GetComponent<ClickTile>().y = y;
+                field[y, x].GetComponent<TileClick>().parent = this.gameObject;
+                field[y, x].GetComponent<TileClick>().x = x;
+                field[y, x].GetComponent<TileClick>().y = y;
             }
         }
     }
 
     public void Click(int x, int y)
     {
-        field[y, x].GetComponent<Tile>().img_type = 4;
+        Tile tile = field[y, x].GetComponent<Tile>();
+        MovesPanel moves_panel;
+
+        switch (tile.img_type) 
+        {
+            case Tile.Type.PLAYER1:
+                moves_panel = moves_panel_player_1.GetComponent<MovesPanel>();
+                break;
+            case Tile.Type.PLAYER2:
+                moves_panel = moves_panel_player_2.GetComponent<MovesPanel>();
+                break;
+            default:
+                return;
+        }
+
+        moves_panel.TakeActiveMoveTile();
+
+        field[y, x].GetComponent<Tile>().img_type = Tile.Type.END;
     }
 
     // Start is called before the first frame update
