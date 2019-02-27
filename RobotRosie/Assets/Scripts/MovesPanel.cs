@@ -24,16 +24,9 @@ public class MovesPanel : MonoBehaviour
     public MoveTile.Type default_move_tile_type;
     public bool are_counters_on_the_right;
 
-    GameObject[] panel;
+    GameObject[] panel = { };
 
     int active_in_panel = NO_ACTIVE;
-
-    //MoveInfo[] moves_info =
-    //{
-    //    new MoveInfo(MoveTile.Direction.FORWARD, 5, 3),
-    //    new MoveInfo(MoveTile.Direction.LEFT, 6, 2),
-    //    new MoveInfo(MoveTile.Direction.RIGHT, 4, 4)
-    //};
 
     int size = 4;
     float step_factor = 1.1F;
@@ -57,6 +50,7 @@ public class MovesPanel : MonoBehaviour
 
     public void CreateMovesPanel(MoveInfo[] moves_info)
     {
+        ClearMovesPanel();
         int moves_types_number = moves_info.Length;
         panel = new GameObject[moves_types_number + 1];
 
@@ -65,6 +59,14 @@ public class MovesPanel : MonoBehaviour
             CreateMoveTile(y, moves_info[y], default_move_tile_type);
         }
         CreateMoveTile(moves_types_number, new MoveInfo(MoveTile.Direction.DELETE, 0, 0), MoveTile.Type.DELETE);
+    }
+
+    public void ClearMovesPanel()
+    {
+        foreach (GameObject panel_elem in panel)
+        {
+            Destroy(panel_elem);
+        }
     }
 
     public void Click(int y)

@@ -12,7 +12,7 @@ public class MoveWithCounter : MonoBehaviour
     public bool are_counters_on_the_right = true;
 
     public MoveTile move_tile;
-    public GameObject counter;
+    public GameObject init_counter;
     GameObject[] counter_panel;
 
     float step_factor = 0.5F;
@@ -29,7 +29,7 @@ public class MoveWithCounter : MonoBehaviour
         float shift = shift_main + x * step_factor; 
         if (!are_counters_on_the_right) shift *= -1;
         Vector3 coords = new Vector3(left_top_coords.x + shift, left_top_coords.y, left_top_coords.z);
-        counter_panel[x] = Instantiate(counter, coords, new Quaternion());
+        counter_panel[x] = Instantiate(init_counter, coords, new Quaternion());
         counter_panel[x].GetComponent<Counter>().img_type = counter_type;
     }
 
@@ -78,5 +78,13 @@ public class MoveWithCounter : MonoBehaviour
     void Update()
     {
         UpdateMoveWithCounter();
+    }
+
+    private void OnDestroy()
+    {
+        foreach (GameObject counter in counter_panel)
+        {
+            Destroy(counter);
+        }
     }
 }

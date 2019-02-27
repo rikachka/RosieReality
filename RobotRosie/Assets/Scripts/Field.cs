@@ -66,7 +66,19 @@ public class Field : MonoBehaviour
         }
     }
 
-    public void CreateField(Tile.Type[,] tiles_types)
+    public void CreateTilesTypes(Tile.Type[,] tiles_types)
+    {
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                field[y, x].GetComponent<Tile>().img_type = tiles_types[y, x];
+                field[y, x].GetComponent<Tile>().ClearDirections();
+            }
+        }
+    }
+
+    public void CreateField()
     {
         Vector3 left_top_coords = transform.position;
         field = new GameObject[size, size];
@@ -77,7 +89,6 @@ public class Field : MonoBehaviour
             {
                 Vector3 coords = new Vector3(left_top_coords.x + x * step_factor, left_top_coords.y - y * step_factor, left_top_coords.z);
                 field[y, x] = Instantiate(init_tile, coords, new Quaternion());
-                field[y, x].GetComponent<Tile>().img_type = tiles_types[y, x];
 
                 field[y, x].GetComponent<TileClick>().parent = this.gameObject;
                 field[y, x].GetComponent<TileClick>().x = x;
@@ -117,6 +128,11 @@ public class Field : MonoBehaviour
         {
             field[y, x].GetComponent<Tile>().AddDirection(active_direction);
         }
+    }
+
+    public bool CheckWinningCondition()
+    {
+        return true;
     }
 
     // Start is called before the first frame update

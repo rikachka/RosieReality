@@ -50,7 +50,8 @@ MonoBehaviour:
   number_available: 0
   are_counters_on_the_right: 0
   move_tile: {fileID: 0}
-  counter: {fileID: 256941451250121659, guid: 8ba399f9cdfe54f5080bacc647e1ce39, type: 3}
+  init_counter: {fileID: 256941451250121659, guid: 8ba399f9cdfe54f5080bacc647e1ce39,
+    type: 3}
 --- !u!1001 &8884526312556994908
 PrefabInstance:
   m_ObjectHideFlags: 0

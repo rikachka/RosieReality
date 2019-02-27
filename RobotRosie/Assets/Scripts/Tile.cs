@@ -31,6 +31,11 @@ public class Tile : MonoBehaviour
         return MoveTile.Direction.NO_DIRECTION;
     }
 
+    public void ClearDirections()
+    {
+        directions = new List<MoveTile.Direction>();
+    }
+
     void ChangeImg()
     {
         if (imgs_types.Length > (int)img_type)
@@ -53,7 +58,6 @@ public class Tile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //directions = new List<MoveTile.Direction>();
         last_direction_tile = transform.Find("LastDirection").gameObject;
         ChangeImg();
     }

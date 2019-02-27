@@ -6,22 +6,42 @@ public class MainGame : MonoBehaviour
 {
     public GameObject moves_panel_player_1, moves_panel_player_2, field;
 
+    bool is_win = false;
+
     private void OnGUI()
     {
         float screen_centre_x = Screen.width / 2;
         float screen_centre_y = Screen.height / 2;
 
-        //Camera cam = GetComponent<Camera>();
         Rect location_button;
 
-        //location_button = new Rect(new Vector2(screen_centre_x - 150, 0), new Vector2(300, 200));
-        //GUI.Box(location_button, "");
+        if (is_win)
+        {
+            location_button = new Rect(new Vector2(10, 10), new Vector2(Screen.width - 20, Screen.height - 20));
+            GUI.Box(location_button, "");
 
-        //location_button = new Rect(new Vector2(screen_centre_x - 10, 10), new Vector2(200, 30));
-        //GUI.Label(location_button, "Menu");
+            location_button = new Rect(new Vector2(screen_centre_x - 100, screen_centre_y - 15), new Vector2(200, 30));
+            GUIStyle gui_style = new GUIStyle();
+            gui_style.fontSize = 30;
+            gui_style.normal.textColor = Color.white;
+            GUI.Label(location_button, "Congratulations!", gui_style);
 
-        location_button = new Rect(new Vector2(screen_centre_x - 110, 10), new Vector2(200, 30));
-        GUI.Button(location_button, "Check");
+
+            location_button = new Rect(new Vector2(screen_centre_x - 93, 10), new Vector2(200, 30));
+            if (GUI.Button(location_button, "New game"))
+            {
+                CreateNewGame();
+                is_win = false;
+            }
+        }
+        else
+        {
+            location_button = new Rect(new Vector2(screen_centre_x - 93, 10), new Vector2(200, 30));
+            if (GUI.Button(location_button, "Check"))
+            {
+                is_win = field.GetComponent<Field>().CheckWinningCondition();
+            }
+        }
     }
 
     void CreateNewGame()
@@ -51,7 +71,7 @@ public class MainGame : MonoBehaviour
             { Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.PLAYER1 },
             { Tile.Type.EMPTY, Tile.Type.START, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1 },
         };
-        field.GetComponent<Field>().CreateField(tiles_types);
+        field.GetComponent<Field>().CreateTilesTypes(tiles_types);
     }
 
     void CreateSolvedGame()
@@ -81,7 +101,7 @@ public class MainGame : MonoBehaviour
             { Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.PLAYER1 },
             { Tile.Type.EMPTY, Tile.Type.START, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1 },
         };
-        field.GetComponent<Field>().CreateField(tiles_types);
+        field.GetComponent<Field>().CreateTilesTypes(tiles_types);
 
         field.GetComponent<Field>().CreateTestDirections();
     }
@@ -89,6 +109,7 @@ public class MainGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        field.GetComponent<Field>().CreateField();
         //CreateNewGame();
         CreateSolvedGame();
     }
