@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class MovesPanel : MonoBehaviour
 {
-    struct MoveInfo
+    const int NO_ACTIVE = -1;
+
+    public struct MoveInfo
     {
         public MoveTile.Direction move_direction;
         public int number_max; 
@@ -20,18 +22,18 @@ public class MovesPanel : MonoBehaviour
 
     public GameObject init_move_with_counter;
     public MoveTile.Type default_move_tile_type;
+    public bool are_counters_on_the_right;
 
     GameObject[] panel;
 
-    const int NO_ACTIVE = -1;
     int active_in_panel = NO_ACTIVE;
 
-    MoveInfo[] moves_info =
-    {
-        new MoveInfo(MoveTile.Direction.FORWARD, 5, 3),
-        new MoveInfo(MoveTile.Direction.LEFT, 6, 2),
-        new MoveInfo(MoveTile.Direction.RIGHT, 4, 4)
-    };
+    //MoveInfo[] moves_info =
+    //{
+    //    new MoveInfo(MoveTile.Direction.FORWARD, 5, 3),
+    //    new MoveInfo(MoveTile.Direction.LEFT, 6, 2),
+    //    new MoveInfo(MoveTile.Direction.RIGHT, 4, 4)
+    //};
 
     int size = 4;
     float step_factor = 1.1F;
@@ -44,6 +46,7 @@ public class MovesPanel : MonoBehaviour
 
         MoveWithCounter move_with_counter = panel[y].GetComponent<MoveWithCounter>();
         move_with_counter.move_type = move_tile_type;
+        move_with_counter.are_counters_on_the_right = are_counters_on_the_right;
         move_with_counter.move_direction = move_tile_info.move_direction;
         move_with_counter.number_max = move_tile_info.number_max;
         move_with_counter.number_available = move_tile_info.number_available;
@@ -52,7 +55,7 @@ public class MovesPanel : MonoBehaviour
         move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().coord_in_panel = y;
     }
 
-    void CreateMovesPanel()
+    public void CreateMovesPanel(MoveInfo[] moves_info)
     {
         int moves_types_number = moves_info.Length;
         panel = new GameObject[moves_types_number + 1];
@@ -140,7 +143,7 @@ public class MovesPanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CreateMovesPanel();
+
     }
 
     // Update is called once per frame

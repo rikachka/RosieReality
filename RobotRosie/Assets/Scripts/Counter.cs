@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Counter : MonoBehaviour
 {
+    public enum Type { EMPTY, AVAILABLE }
+
     public Sprite[] imgs;
 
-    public int img_type = 0;
+    public Type img_type;
 
     void ChangeImg()
     {
-        if (imgs.Length > img_type)
+        if (imgs.Length > (int)img_type)
         {
-            GetComponent<SpriteRenderer>().sprite = imgs[img_type];
+            GetComponent<SpriteRenderer>().sprite = imgs[(int)img_type];
         }
     }
 

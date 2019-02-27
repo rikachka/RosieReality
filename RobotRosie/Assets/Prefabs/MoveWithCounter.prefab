@@ -44,10 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a91007423984f2ba34dd6af5522af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imgs: []
-  img_type: 0
+  move_type: 0
+  move_direction: 0
   number_max: 0
   number_available: 0
+  are_counters_on_the_right: 0
+  move_tile: {fileID: 0}
   counter: {fileID: 256941451250121659, guid: 8ba399f9cdfe54f5080bacc647e1ce39, type: 3}
 --- !u!1001 &8884526312556994908
 PrefabInstance:
