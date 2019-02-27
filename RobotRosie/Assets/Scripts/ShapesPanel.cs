@@ -23,9 +23,6 @@ public class ShapesPanel : MonoBehaviour
     public GameObject shape;
 
     GameObject[] panel;
-    //ShapeType[] shapes_types = { ShapeType.FORWARD, ShapeType.LEFT, ShapeType.RIGHT };
-    //int[] numbers_max = { 5, 6, 4 };
-    //int[] numbers_available = { 3, 2, 4 };
 
     ShapeInfo[] shapes_info =
     {
@@ -48,25 +45,9 @@ public class ShapesPanel : MonoBehaviour
             panel[y].GetComponent<Shape>().img_type = (int)shapes_info[y].shape_type;
             panel[y].GetComponent<Shape>().number_max = shapes_info[y].number_max;
             panel[y].GetComponent<Shape>().number_available = shapes_info[y].number_available;
-            //panel[y].GetComponent<Shape>().img_type = (int)shapes_types[y];
-            //panel[y].GetComponent<Shape>().number_max = numbers_max[y];
-            //panel[y].GetComponent<Shape>().number_available = numbers_available[y];
             panel[y].transform.position = new Vector3(left_top_coords.x, left_top_coords.y - y * step_factor, left_top_coords.z);
         }
     }
-
-    //void CreateShapesPanel()
-    //{
-    //    Vector3 left_top_coords = transform.position;
-    //    panel = new GameObject[size];
-
-    //    for (int x = 0; x < size; x++)
-    //    {
-    //        panel[x] = Instantiate(shape);
-    //        panel[x].GetComponent<Tile>().img_type = (int)shapes_types[x];
-    //        panel[x].transform.position = new Vector3(left_top_coords.x + x * step_factor, left_top_coords.y, left_top_coords.z);
-    //    }
-    //}
 
     // Start is called before the first frame update
     void Start()
