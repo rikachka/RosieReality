@@ -61,11 +61,19 @@ public class Field : MonoBehaviour
                 return;
         }
 
-        MoveTile.Direction direction = moves_panel.TakeActiveMoveTile();
-        if (direction != MoveTile.Direction.NO_DIRECTION)
+        MoveTile.Direction active_direction = moves_panel.TakeActiveMoveTile();
+        if (active_direction == MoveTile.Direction.DELETE)
         {
-            field[y, x].GetComponent<Tile>().AddDirection(direction);
-            //field[y, x].GetComponent<Tile>().img_type = Tile.Type.END;
+            MoveTile.Direction returned_direction = field[y, x].GetComponent<Tile>().DeleteDirection();
+            if (returned_direction != MoveTile.Direction.NO_DIRECTION)
+            {
+                moves_panel.ReturnMoveTile(returned_direction);
+            }
+
+        }
+        else if (active_direction != MoveTile.Direction.NO_DIRECTION)
+        {
+            field[y, x].GetComponent<Tile>().AddDirection(active_direction);
         }
     }
 

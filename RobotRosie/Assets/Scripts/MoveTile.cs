@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MoveTile : MonoBehaviour
 {
-    public enum Direction { NO_DIRECTION, FORWARD, LEFT, RIGHT }
-    public enum Type { ACTIVE, PLAYER1, PLAYER2 }
+    public enum Direction { NO_DIRECTION, FORWARD, LEFT, RIGHT, DELETE }
+    public enum Type { ACTIVE, PLAYER1, PLAYER2, DELETE }
 
     public Sprite[] imgs_types;
     public Sprite[] imgs_directions;

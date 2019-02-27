@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class MovesPanel : MonoBehaviour
 {
-    struct MovesInfo
+    struct MoveInfo
     {
         public MoveTile.Direction move_direction;
         public int number_max; 
         public int number_available;
 
-        public MovesInfo(MoveTile.Direction move_direction_, int number_max_, int number_available_)
+        public MoveInfo(MoveTile.Direction move_direction_, int number_max_, int number_available_)
         {
             move_direction = move_direction_;
             number_max = number_max_;
@@ -26,60 +26,79 @@ public class MovesPanel : MonoBehaviour
     const int NO_ACTIVE = -1;
     int active_in_panel = NO_ACTIVE;
 
-    MovesInfo[] moves_info =
+    MoveInfo[] moves_info =
     {
-        new MovesInfo(MoveTile.Direction.FORWARD, 5, 3),
-        new MovesInfo(MoveTile.Direction.LEFT, 6, 2),
-        new MovesInfo(MoveTile.Direction.RIGHT, 4, 4)
+        new MoveInfo(MoveTile.Direction.FORWARD, 5, 3),
+        new MoveInfo(MoveTile.Direction.LEFT, 6, 2),
+        new MoveInfo(MoveTile.Direction.RIGHT, 4, 4)
     };
 
-    int size = 3;
+    int size = 4;
     float step_factor = 1.1F;
+
+    void CreateMoveTile(int y, MoveInfo move_tile_info, MoveTile.Type move_tile_type) 
+    {
+        Vector3 left_top_coords = transform.position;
+        Vector3 coords = new Vector3(left_top_coords.x, left_top_coords.y - y * step_factor, left_top_coords.z);
+        panel[y] = Instantiate(init_move_with_counter, coords, new Quaternion());
+
+        MoveWithCounter move_with_counter = panel[y].GetComponent<MoveWithCounter>();
+        move_with_counter.move_type = move_tile_type;
+        move_with_counter.move_direction = move_tile_info.move_direction;
+        move_with_counter.number_max = move_tile_info.number_max;
+        move_with_counter.number_available = move_tile_info.number_available;
+
+        move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().parent_panel = this.gameObject;
+        move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().coord_in_panel = y;
+    }
 
     void CreateMovesPanel()
     {
-        Vector3 left_top_coords = transform.position;
-        panel = new GameObject[size];
+        int moves_types_number = moves_info.Length;
+        panel = new GameObject[moves_types_number + 1];
 
-        for (int y = 0; y < size; y++)
+        for (int y = 0; y < moves_types_number; y++)
         {
-            Vector3 coords = new Vector3(left_top_coords.x, left_top_coords.y - y * step_factor, left_top_coords.z);
-            panel[y] = Instantiate(init_move_with_counter, coords, new Quaternion());
-
-            MoveWithCounter move_with_counter = panel[y].GetComponent<MoveWithCounter>();
-            move_with_counter.move_type = default_move_tile_type;
-            move_with_counter.move_direction = moves_info[y].move_direction;
-            move_with_counter.number_max = moves_info[y].number_max;
-            move_with_counter.number_available = moves_info[y].number_available;
-
-            move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().parent_panel = this.gameObject;
-            move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().coord_in_panel = y;
+            CreateMoveTile(y, moves_info[y], default_move_tile_type);
         }
+        CreateMoveTile(moves_types_number, new MoveInfo(MoveTile.Direction.DELETE, 0, 0), MoveTile.Type.DELETE);
     }
 
     public void Click(int y)
     {
-        if (panel[y].GetComponent<MoveWithCounter>().number_available <= 0)
+        MoveWithCounter move_tile_clicked = panel[y].GetComponent<MoveWithCounter>();
+
+        if (move_tile_clicked.number_available <= 0 && move_tile_clicked.move_direction != MoveTile.Direction.DELETE)
         {
             return;
         }
 
         if (active_in_panel == NO_ACTIVE)
         {
+            move_tile_clicked.move_type = MoveTile.Type.ACTIVE;
             active_in_panel = y;
-            panel[active_in_panel].GetComponent<MoveWithCounter>().move_type = MoveTile.Type.ACTIVE;
             return;
         }
 
-        panel[active_in_panel].GetComponent<MoveWithCounter>().move_type = default_move_tile_type;
+        MoveWithCounter move_tile_active = panel[active_in_panel].GetComponent<MoveWithCounter>();
+
+        if (move_tile_active.move_direction == MoveTile.Direction.DELETE)
+        {
+            move_tile_active.move_type = MoveTile.Type.DELETE;
+        }
+        else
+        {
+            move_tile_active.move_type = default_move_tile_type;
+        }
+
         if (y == active_in_panel)
         {
             active_in_panel = NO_ACTIVE;
         }
         else
         {
+            move_tile_clicked.move_type = MoveTile.Type.ACTIVE;
             active_in_panel = y;
-            panel[active_in_panel].GetComponent<MoveWithCounter>().move_type = MoveTile.Type.ACTIVE;
         }
     }
 
@@ -89,12 +108,33 @@ public class MovesPanel : MonoBehaviour
         {
             MoveWithCounter move_with_counter = panel[active_in_panel].GetComponent<MoveWithCounter>();
             MoveTile.Direction move_direction = move_with_counter.move_direction;
-            move_with_counter.number_available--;
-            move_with_counter.move_type = default_move_tile_type;
-            active_in_panel = NO_ACTIVE;
+
+            if (move_direction != MoveTile.Direction.DELETE)
+            {
+                move_with_counter.number_available--;
+                if (move_with_counter.number_available == 0)
+                {
+                    move_with_counter.move_type = default_move_tile_type;
+                    active_in_panel = NO_ACTIVE;
+                }
+            }
+
             return move_direction;
         }
         return MoveTile.Direction.NO_DIRECTION;
+    }
+
+    public void ReturnMoveTile(MoveTile.Direction returned_direction)
+    {
+        foreach (GameObject panel_elem in panel)
+        {
+            MoveWithCounter move_with_counter = panel_elem.GetComponent<MoveWithCounter>();
+            if (move_with_counter.move_direction == returned_direction)
+            {
+                move_with_counter.number_available++;
+                return;
+            }
+        }
     }
 
     // Start is called before the first frame update

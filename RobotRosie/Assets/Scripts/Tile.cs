@@ -20,6 +20,17 @@ public class Tile : MonoBehaviour
         directions.Add(direction);
     }
 
+    public MoveTile.Direction DeleteDirection()
+    {
+        if (directions.Count > 0)
+        {
+            MoveTile.Direction direction = directions[directions.Count - 1];
+            directions.RemoveAt(directions.Count - 1);
+            return direction;
+        }
+        return MoveTile.Direction.NO_DIRECTION;
+    }
+
     void ChangeImg()
     {
         if (imgs_types.Length > (int)img_type)
@@ -27,12 +38,13 @@ public class Tile : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = imgs_types[(int)img_type];
         }
 
-        if (directions.Count == 0)
+        if (directions.Count <= 0)
         {
             last_direction_tile.GetComponent<SpriteRenderer>().sprite = null;
         }
         else
         {
+            //Debug.Log(directions.Count);
             MoveTile.Direction last_direction = directions[directions.Count - 1];
             last_direction_tile.GetComponent<SpriteRenderer>().sprite = imgs_directions[(int)last_direction];
         }
