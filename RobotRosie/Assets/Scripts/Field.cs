@@ -9,25 +9,67 @@ public class Field : MonoBehaviour
     public GameObject moves_panel_player_1, moves_panel_player_2;
 
     GameObject[,] field;
-    GameObject[,,] moves;
-    Tile.Type[,] tiles_types = 
-    { 
-        { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.END },
-        { Tile.Type.PLAYER1, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY },
-        { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1, Tile.Type.PLAYER2 },
-        { Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.PLAYER1 },
-        { Tile.Type.EMPTY, Tile.Type.START, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1 },
-    };
 
     int size = 5;
     float step_factor = 1.1F;
-    int MAX_MOVES = 5;
 
-    void CreateField()
+    public void CreateTestDirections()
+    {
+        List<MoveTile.Direction>[,] directions =
+        {
+            {
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.RIGHT, MoveTile.Direction.FORWARD }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ })
+            },
+            {
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ })
+            },
+            {
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.RIGHT, MoveTile.Direction.FORWARD }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.LEFT, MoveTile.Direction.FORWARD })
+            },
+            {
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD })
+            },
+            {
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
+                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.LEFT, MoveTile.Direction.FORWARD })
+            }
+        };
+
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                foreach (MoveTile.Direction direction in directions[y, x])
+                {
+                    field[y, x].GetComponent<Tile>().AddDirection(direction);
+                }
+            }
+        }
+    }
+
+    public void CreateField(Tile.Type[,] tiles_types)
     {
         Vector3 left_top_coords = transform.position;
         field = new GameObject[size, size];
-        moves = new GameObject[size, size, MAX_MOVES];
 
         for (int y = 0; y < size; y++)
         {
@@ -80,7 +122,8 @@ public class Field : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CreateField();
+        //CreateField();
+        //CreateTestDirections();
     }
 
     // Update is called once per frame

@@ -13,7 +13,7 @@ public class Tile : MonoBehaviour
 
     GameObject last_direction_tile;
 
-    List<MoveTile.Direction> directions;
+    List<MoveTile.Direction> directions = new List<MoveTile.Direction>();
 
     public void AddDirection(MoveTile.Direction direction)
     {
@@ -53,7 +53,7 @@ public class Tile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        directions = new List<MoveTile.Direction>();
+        //directions = new List<MoveTile.Direction>();
         last_direction_tile = transform.Find("LastDirection").gameObject;
         ChangeImg();
     }
