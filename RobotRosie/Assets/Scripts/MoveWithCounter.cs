@@ -19,6 +19,11 @@ public class MoveWithCounter : MonoBehaviour
     float step_factor = 0.5F;
     float shift = 1;
 
+    public GameObject GetMoveTile()
+    {
+        return transform.Find("MoveTile").gameObject;
+    }
+
     void CreateMoveWithCounter()
     {
         move_tile.type = move_type;
@@ -61,7 +66,7 @@ public class MoveWithCounter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        move_tile = transform.Find("MoveTile").gameObject.GetComponent<MoveTile>();
+        move_tile = GetMoveTile().GetComponent<MoveTile>();
         CreateMoveWithCounter();
     }
 

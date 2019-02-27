@@ -20,7 +20,7 @@ public class MovesPanel : MonoBehaviour
 
     public enum MoveDirection { FORWARD, LEFT, RIGHT }
 
-    public GameObject move_with_counter;
+    public GameObject init_move_with_counter;
     public int player;
 
     GameObject[] panel;
@@ -42,13 +42,24 @@ public class MovesPanel : MonoBehaviour
 
         for (int y = 0; y < size; y++)
         {
-            panel[y] = Instantiate(move_with_counter);
-            panel[y].GetComponent<MoveWithCounter>().move_type = player;
-            panel[y].GetComponent<MoveWithCounter>().move_direction = (int)moves_info[y].move_direction;
-            panel[y].GetComponent<MoveWithCounter>().number_max = moves_info[y].number_max;
-            panel[y].GetComponent<MoveWithCounter>().number_available = moves_info[y].number_available;
-            panel[y].transform.position = new Vector3(left_top_coords.x, left_top_coords.y - y * step_factor, left_top_coords.z);
+            Vector3 coords = new Vector3(left_top_coords.x, left_top_coords.y - y * step_factor, left_top_coords.z);
+            panel[y] = Instantiate(init_move_with_counter, coords, new Quaternion());
+
+            MoveWithCounter move_with_counter = panel[y].GetComponent<MoveWithCounter>();
+            move_with_counter.move_type = player;
+            move_with_counter.move_direction = (int)moves_info[y].move_direction;
+            move_with_counter.number_max = moves_info[y].number_max;
+            move_with_counter.number_available = moves_info[y].number_available;
+
+            move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().parent_panel = this.gameObject;
+            move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().coord_in_panel = y;
         }
+    }
+
+    public void Click(int y)
+    {
+        //Debug.Log("Click in MovesPanel");
+        panel[y].GetComponent<MoveWithCounter>().move_type = 0;
     }
 
     // Start is called before the first frame update

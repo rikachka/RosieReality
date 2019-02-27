@@ -10,6 +10,9 @@ public class MoveTile : MonoBehaviour
     public int type = 0;
     public int direction = 0;
 
+    //public GameObject parent_panel;
+    //public int coord_in_panel;
+
     GameObject back;
 
     void ChangeImg()
@@ -28,6 +31,7 @@ public class MoveTile : MonoBehaviour
     void Start()
     {
         back = transform.Find("Back").gameObject;
+        //Debug.Log("Start in MoveTile");
         ChangeImg();
     }
 
@@ -36,4 +40,15 @@ public class MoveTile : MonoBehaviour
     {
         ChangeImg();
     }
+
+    //private void OnMouseDown()
+    //{
+    //    Debug.Log("Click in MoveTile");
+    //    type = 0;
+
+    //    if (parent_panel != null)
+    //    {
+    //        parent_panel.GetComponent<MovesPanel>().Click(coord_in_panel);
+    //    }
+    //}
 }
