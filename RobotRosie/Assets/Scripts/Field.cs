@@ -88,9 +88,21 @@ public class Field : MonoBehaviour
                 tile.ClearDirections();
                 if (tile.type == Tile.Type.START)
                 {
-                    tile.robot_type = Robot.Type.MOVE;
                     tile.AddDirection(MoveTile.Direction.FORWARD);
                 }
+                tile.robot.GetComponent<Robot>().type = Robot.Type.EMPTY;
+            }
+        }
+    }
+
+    public void ClearRobotRoute()
+    {
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                Tile tile = field[y, x].GetComponent<Tile>();
+                tile.robot.GetComponent<Robot>().type = Robot.Type.EMPTY;
             }
         }
     }
@@ -170,18 +182,12 @@ public class Field : MonoBehaviour
         bool[,] visited = new bool[size, size];
         while (!visited[point.y, point.x])
         {
-            Debug.Log("Point");
-            Debug.Log(point.x);
-            Debug.Log(point.y);
-            if (point.x < 0 || point.x >= size || point.y < 0 || point.y >= size) return false;
             visited[point.y, point.x] = true;
 
             Tile tile = field[point.y, point.x].GetComponent<Tile>();
             if (tile.type == Tile.Type.EMPTY) return false;
 
-            Debug.Log(robot.direction);
             robot = tile.MoveRobotThrough(robot.direction);
-            Debug.Log(robot.direction);
             if (robot.type == Robot.Type.STOP)
             {
                 if (tile.type == Tile.Type.END) return true;
@@ -205,6 +211,8 @@ public class Field : MonoBehaviour
                         break;
                 }
             }
+
+            if (point.x < 0 || point.x >= size || point.y < 0 || point.y >= size) return false;
         }
         return false;
     }

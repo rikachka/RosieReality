@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class MainGame : MonoBehaviour
 {
+    public enum State { GAME, CHECK, WIN }
+
     public GameObject moves_panel_player_1, moves_panel_player_2, field;
 
-    bool is_win = false;
+    State state = State.GAME;
 
     private void OnGUI()
     {
@@ -15,32 +17,48 @@ public class MainGame : MonoBehaviour
 
         Rect location_button;
 
-        if (is_win)
-        {
-            location_button = new Rect(new Vector2(10, 10), new Vector2(Screen.width - 20, Screen.height - 20));
-            GUI.Box(location_button, "");
+        switch (state) {
+            case State.WIN:
+                location_button = new Rect(new Vector2(10, 10), new Vector2(Screen.width - 20, Screen.height - 20));
+                GUI.Box(location_button, "");
 
-            location_button = new Rect(new Vector2(screen_centre_x - 100, screen_centre_y - 15), new Vector2(200, 30));
-            GUIStyle gui_style = new GUIStyle();
-            gui_style.fontSize = 30;
-            gui_style.normal.textColor = Color.white;
-            GUI.Label(location_button, "Congratulations!", gui_style);
+                location_button = new Rect(new Vector2(screen_centre_x - 100, screen_centre_y - 15), new Vector2(200, 30));
+                GUIStyle gui_style = new GUIStyle();
+                gui_style.fontSize = 30;
+                gui_style.normal.textColor = Color.white;
+                GUI.Label(location_button, "Congratulations!", gui_style);
 
 
-            location_button = new Rect(new Vector2(screen_centre_x - 93, 10), new Vector2(200, 30));
-            if (GUI.Button(location_button, "New game"))
-            {
-                CreateNewGame();
-                is_win = false;
-            }
-        }
-        else
-        {
-            location_button = new Rect(new Vector2(screen_centre_x - 93, 10), new Vector2(200, 30));
-            if (GUI.Button(location_button, "Check"))
-            {
-                is_win = field.GetComponent<Field>().CheckWinningCondition();
-            }
+                location_button = new Rect(new Vector2(screen_centre_x - 93, 10), new Vector2(200, 30));
+                if (GUI.Button(location_button, "New game"))
+                {
+                    //field.GetComponent<Field>().ClearRobotRoute();
+                    CreateNewGame();
+                    state = State.GAME;
+                }
+                break;
+            case State.GAME:
+                location_button = new Rect(new Vector2(screen_centre_x - 93, 10), new Vector2(200, 30));
+                if (GUI.Button(location_button, "Check"))
+                {
+                    if (field.GetComponent<Field>().CheckWinningCondition())
+                    {
+                        state = State.WIN;
+                    }
+                    else
+                    {
+                        state = State.CHECK;
+                    }
+                }
+                break;
+            case State.CHECK:
+                location_button = new Rect(new Vector2(screen_centre_x - 93, 10), new Vector2(200, 30));
+                if (GUI.Button(location_button, "Continue"))
+                {
+                    field.GetComponent<Field>().ClearRobotRoute();
+                    state = State.GAME;
+                }
+                break;
         }
     }
 
