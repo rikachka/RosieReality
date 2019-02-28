@@ -43,5 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00c72b2e7c66141638ea73c06a01501d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  init_exchanger_tile: {fileID: 1215603135570554216, guid: 5ee69a7a33e884a8580731ba6db37f90,
+  init_exchanger_tile_object: {fileID: 1215603135570554216, guid: 5ee69a7a33e884a8580731ba6db37f90,
     type: 3}
+  moves_panel_player_1: {fileID: 0}
+  moves_panel_player_2: {fileID: 0}

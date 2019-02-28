@@ -41,7 +41,7 @@ public class MoveWithCounter : MonoBehaviour
         if (!are_counters_on_the_right) shift *= -1;
         Vector3 coords = new Vector3(left_top_coords.x + shift, left_top_coords.y, left_top_coords.z);
         counter_panel[x] = Instantiate(init_counter_object, coords, new Quaternion()).GetComponent<Counter>();
-        counter_panel[x].img_type = counter_type;
+        counter_panel[x].type = counter_type;
     }
 
     void CreateMoveWithCounter()
@@ -60,7 +60,7 @@ public class MoveWithCounter : MonoBehaviour
     {
         for (int x = min_index; x < max_index; x++)
         {
-            counter_panel[x].img_type = counter_type;
+            counter_panel[x].type = counter_type;
         }
     }
 
@@ -68,8 +68,8 @@ public class MoveWithCounter : MonoBehaviour
     {
         move_tile.type = move_type;
 
-        UpdateMovesWithCounterOfType(Counter.Type.EMPTY, 0, available_number);
-        UpdateMovesWithCounterOfType(Counter.Type.AVAILABLE, available_number, max_availbale_number);
+        UpdateMovesWithCounterOfType(Counter.Type.AVAILABLE, 0, available_number);
+        UpdateMovesWithCounterOfType(Counter.Type.EMPTY, available_number, max_availbale_number);
         UpdateMovesWithCounterOfType(Counter.Type.NO_COUNTER, max_availbale_number, MAX_POSSIBLE_COUNTERS_NUMBER);
     }
 

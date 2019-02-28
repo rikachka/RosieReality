@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Counter : MonoBehaviour
 {
-    public enum Type { EMPTY, AVAILABLE, NO_COUNTER }
+    public enum Type { NO_COUNTER, EMPTY, AVAILABLE }
 
-    public Sprite[] imgs;
+    public Sprite[] imgs_types;
 
-    public Type img_type;
+    public Type type;
 
     void ChangeImg()
     {
-        if (img_type == Type.NO_COUNTER)
+        if (type == Type.NO_COUNTER)
         {
             GetComponent<SpriteRenderer>().sprite = null;
         }
         else 
         {
-            GetComponent<SpriteRenderer>().sprite = imgs[(int)img_type];
+            GetComponent<SpriteRenderer>().sprite = imgs_types[(int)type];
         }
     }
 

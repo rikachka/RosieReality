@@ -107,7 +107,7 @@ public class Field : MonoBehaviour
         }
     }
 
-    void CreateField()
+    public void CreateField()
     {
         Vector3 left_top_coords = transform.position;
         field = new GameObject[size, size];
@@ -226,7 +226,7 @@ public class Field : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CreateField();
+        //CreateField();
     }
 
     // Update is called once per frame

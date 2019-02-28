@@ -122,6 +122,9 @@ public class MainGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        field.GetComponent<Field>().CreateField();
+        moves_panel_player_1.GetComponent<MovesPanel>().CreateMovesPanel();
+        moves_panel_player_2.GetComponent<MovesPanel>().CreateMovesPanel();
         //CreateNewGame();
         CreateSolvedGame();
     }

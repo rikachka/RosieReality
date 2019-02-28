@@ -92,7 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da49d3b05fda4c1b879a2b68a291994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imgs:
-  - {fileID: 21300000, guid: eaad81231f7024a0991aca8367a6d337, type: 3}
+  imgs_types:
+  - {fileID: 0}
   - {fileID: 21300000, guid: ccd1f16f2bdb444c9a2f9489ea45f491, type: 3}
-  img_type: 0
+  - {fileID: 21300000, guid: eaad81231f7024a0991aca8367a6d337, type: 3}
+  type: 0

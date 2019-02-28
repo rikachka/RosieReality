@@ -28,7 +28,7 @@ public class MovesPanel : MonoBehaviour
     public bool are_counters_on_the_right;
 
     public GameObject init_move_with_counter_object;
-    MoveWithCounter[] panel = { };
+    MoveWithCounter[] panel;
 
     // One of the tiles in the panel can be active. This tile will be used 
     // in the field or in the exchanger if we click there.
@@ -186,7 +186,7 @@ public class MovesPanel : MonoBehaviour
         move_with_counter.move_tile.GetComponent<MoveTileClick>().parent_index = y;
     }
 
-    void CreateMovesPanel()
+    public void CreateMovesPanel()
     {
         panel = new MoveWithCounter[MOVES_IN_PANEL_NUMBER];
 
@@ -198,6 +198,6 @@ public class MovesPanel : MonoBehaviour
 
     void Start()
     {
-        CreateMovesPanel();
+        //CreateMovesPanel();
     }
 }
