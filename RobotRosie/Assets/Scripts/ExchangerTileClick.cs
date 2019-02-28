@@ -11,7 +11,7 @@ public class ExchangerTileClick : MonoBehaviour
     {
         if (parent != null)
         {
-            parent.GetComponent<Exchanger>().Click(parent_index);
+            parent.GetComponent<Exchanger>().ClickByIndex(parent_index);
         }
     }
 }

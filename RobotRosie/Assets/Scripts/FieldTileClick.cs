@@ -12,7 +12,7 @@ public class FieldTileClick : MonoBehaviour
     {
         if (parent != null)
         {
-            parent.GetComponent<Field>().Click(parent_point);
+            parent.GetComponent<Field>().ClickByPoint(parent_point);
         }
     }
 }

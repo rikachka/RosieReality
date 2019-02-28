@@ -11,7 +11,7 @@ public class MoveTileClick : MonoBehaviour
     {
         if (parent != null)
         {
-            parent.GetComponent<MovesPanel>().Click(parent_index);
+            parent.GetComponent<MovesPanel>().ClickByIndex(parent_index);
         }
     }
 }

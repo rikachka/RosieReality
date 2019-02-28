@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class MoveWithCounter : MonoBehaviour
 {
-    const int MAX_POSSIBLE_COUNTERS = 15;
-    float COUNTER_SHIFT_FACTOR = 0.5F;
-    float COUNTER_SHIFT = 1;
+    const int MAX_POSSIBLE_COUNTERS_NUMBER = 15;
+    const float COUNTER_SHIFT_FACTOR = 0.5F;
+    const float COUNTER_SHIFT = 1;
 
-    public MoveTile.Type move_type = 0;
+    public MoveTile.Type move_type;
 
-    public int number_max = 0;
-    public int number_available = 0;
-    public bool are_counters_on_the_right = true;
+    // Number of counters available to the player (both in the panel and in the field).
+    public int max_availbale_number;
+    // Number of counters available in the panel.
+    public int available_number;
+    // Draw counters on the right or left from the move tile.
+    public bool are_counters_on_the_right;
 
     public MoveTile move_tile;
     public GameObject init_counter_object;
     Counter[] counter_panel;
+
 
     public Move.Direction GetDirection()
     {
@@ -27,6 +31,7 @@ public class MoveWithCounter : MonoBehaviour
     {
         move_tile.SetDirection(direction);
     }
+
 
     void CreateMoveWithCounter(int x, Counter.Type counter_type)
     {
@@ -42,9 +47,9 @@ public class MoveWithCounter : MonoBehaviour
     {
         move_tile.type = move_type;
 
-        counter_panel = new Counter[MAX_POSSIBLE_COUNTERS];
+        counter_panel = new Counter[MAX_POSSIBLE_COUNTERS_NUMBER];
 
-        for (int x = 0; x < MAX_POSSIBLE_COUNTERS; x++)
+        for (int x = 0; x < MAX_POSSIBLE_COUNTERS_NUMBER; x++)
         {
             CreateMoveWithCounter(x, Counter.Type.NO_COUNTER);
         }
@@ -62,9 +67,9 @@ public class MoveWithCounter : MonoBehaviour
     {
         move_tile.type = move_type;
 
-        UpdateMovesWithCounterOfType(Counter.Type.EMPTY, 0, number_available);
-        UpdateMovesWithCounterOfType(Counter.Type.AVAILABLE, number_available, number_max);
-        UpdateMovesWithCounterOfType(Counter.Type.NO_COUNTER, number_max, MAX_POSSIBLE_COUNTERS);
+        UpdateMovesWithCounterOfType(Counter.Type.EMPTY, 0, available_number);
+        UpdateMovesWithCounterOfType(Counter.Type.AVAILABLE, available_number, max_availbale_number);
+        UpdateMovesWithCounterOfType(Counter.Type.NO_COUNTER, max_availbale_number, MAX_POSSIBLE_COUNTERS_NUMBER);
     }
 
     void Start()

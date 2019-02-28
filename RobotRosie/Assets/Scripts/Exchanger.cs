@@ -36,7 +36,7 @@ public class Exchanger : MonoBehaviour
         }
     }
 
-    public void Click(int x)
+    public void ClickByIndex(int x)
     {
         ExchangerTile exchanger_tile = panel[x].GetComponent<ExchangerTile>();
         MovesPanel moves_panel;

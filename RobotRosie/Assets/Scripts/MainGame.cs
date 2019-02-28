@@ -59,22 +59,20 @@ public class MainGame : MonoBehaviour
 
     void CreateNewGame()
     {
-        MovesPanel.MoveInfo[] moves_info_1 = 
+        MovesPanel.MoveWithCounterInfo[] moves_info_1 = 
         {
-            new MovesPanel.MoveInfo(Move.Direction.FORWARD, 8, 8),
-            new MovesPanel.MoveInfo(Move.Direction.LEFT, 0, 0),
-            new MovesPanel.MoveInfo(Move.Direction.RIGHT, 1, 1)
+            new MovesPanel.MoveWithCounterInfo(Move.Direction.FORWARD, 8, 8),
+            new MovesPanel.MoveWithCounterInfo(Move.Direction.LEFT, 0, 0),
+            new MovesPanel.MoveWithCounterInfo(Move.Direction.RIGHT, 1, 1)
         };
-        //moves_panel_player_1.GetComponent<MovesPanel>().CreateMovesPanel(moves_info_1);
         moves_panel_player_1.GetComponent<MovesPanel>().UpdateMovesPanel(moves_info_1);
 
-        MovesPanel.MoveInfo[] moves_info_2 = 
+        MovesPanel.MoveWithCounterInfo[] moves_info_2 = 
         {
-            new MovesPanel.MoveInfo(Move.Direction.FORWARD, 6, 6),
-            new MovesPanel.MoveInfo(Move.Direction.LEFT, 2, 2),
-            new MovesPanel.MoveInfo(Move.Direction.RIGHT, 1, 1)
+            new MovesPanel.MoveWithCounterInfo(Move.Direction.FORWARD, 6, 6),
+            new MovesPanel.MoveWithCounterInfo(Move.Direction.LEFT, 2, 2),
+            new MovesPanel.MoveWithCounterInfo(Move.Direction.RIGHT, 1, 1)
         };
-        //moves_panel_player_2.GetComponent<MovesPanel>().CreateMovesPanel(moves_info_2);
         moves_panel_player_2.GetComponent<MovesPanel>().UpdateMovesPanel(moves_info_2);
 
 
@@ -91,22 +89,20 @@ public class MainGame : MonoBehaviour
 
     void CreateSolvedGame()
     {
-        MovesPanel.MoveInfo[] moves_info_1 =
+        MovesPanel.MoveWithCounterInfo[] moves_info_1 =
         {
-            new MovesPanel.MoveInfo(Move.Direction.FORWARD, 6, 0),
-            new MovesPanel.MoveInfo(Move.Direction.LEFT, 1, 0),
-            new MovesPanel.MoveInfo(Move.Direction.RIGHT, 2, 0)
+            new MovesPanel.MoveWithCounterInfo(Move.Direction.FORWARD, 6, 0),
+            new MovesPanel.MoveWithCounterInfo(Move.Direction.LEFT, 1, 0),
+            new MovesPanel.MoveWithCounterInfo(Move.Direction.RIGHT, 2, 0)
         };
-        //moves_panel_player_1.GetComponent<MovesPanel>().CreateMovesPanel(moves_info_1);
         moves_panel_player_1.GetComponent<MovesPanel>().UpdateMovesPanel(moves_info_1);
 
-        MovesPanel.MoveInfo[] moves_info_2 =
+        MovesPanel.MoveWithCounterInfo[] moves_info_2 =
         {
-            new MovesPanel.MoveInfo(Move.Direction.FORWARD, 8, 0),
-            new MovesPanel.MoveInfo(Move.Direction.LEFT, 1, 0),
-            new MovesPanel.MoveInfo(Move.Direction.RIGHT, 0, 0)
+            new MovesPanel.MoveWithCounterInfo(Move.Direction.FORWARD, 8, 0),
+            new MovesPanel.MoveWithCounterInfo(Move.Direction.LEFT, 1, 0),
+            new MovesPanel.MoveWithCounterInfo(Move.Direction.RIGHT, 0, 0)
         };
-        //moves_panel_player_2.GetComponent<MovesPanel>().CreateMovesPanel(moves_info_2);
         moves_panel_player_2.GetComponent<MovesPanel>().UpdateMovesPanel(moves_info_2);
 
 
@@ -126,9 +122,6 @@ public class MainGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        field.GetComponent<Field>().CreateField();
-        moves_panel_player_1.GetComponent<MovesPanel>().CreateMovesPanel();
-        moves_panel_player_2.GetComponent<MovesPanel>().CreateMovesPanel();
         //CreateNewGame();
         CreateSolvedGame();
     }
