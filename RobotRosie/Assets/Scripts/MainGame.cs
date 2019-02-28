@@ -123,8 +123,8 @@ public class MainGame : MonoBehaviour
     void Start()
     {
         field.GetComponent<Field>().CreateField();
-        CreateNewGame();
-        //CreateSolvedGame();
+        //CreateNewGame();
+        CreateSolvedGame();
     }
 
     // Update is called once per frame

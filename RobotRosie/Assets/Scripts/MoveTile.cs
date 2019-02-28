@@ -8,14 +8,17 @@ public class MoveTile : MonoBehaviour
 
     public Sprite[] imgs_types;
 
-    public Type type = 0;
-    public Move.Direction direction = 0;
+    public Move move;
 
-    public GameObject move;
+    public Type type;
+
+    public void SetDirection(Move.Direction direction)
+    {
+        move.direction = direction;
+    }
 
     void ChangeImg()
     {
-        move.GetComponent<Move>().direction = direction;
         GetComponent<SpriteRenderer>().sprite = imgs_types[(int)type];
     }
 

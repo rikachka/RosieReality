@@ -57,7 +57,7 @@ public class Exchanger : MonoBehaviour
 
         if (active_direction == Move.Direction.NO_DIRECTION) return;
 
-        Move.Direction returned_direction = exchanger_tile.direction;
+        Move.Direction returned_direction = exchanger_tile.GetDirection();
 
         if (returned_direction != Move.Direction.NO_DIRECTION)
         {
@@ -66,11 +66,11 @@ public class Exchanger : MonoBehaviour
 
         if (active_direction == Move.Direction.DELETE)
         {
-            exchanger_tile.direction = Move.Direction.NO_DIRECTION;
+            exchanger_tile.SetDirection(Move.Direction.NO_DIRECTION);
         }
         else 
         {
-            exchanger_tile.direction = active_direction;
+            exchanger_tile.SetDirection(active_direction);
         }
 
         ExchangeIfPossible();
@@ -120,10 +120,10 @@ public class Exchanger : MonoBehaviour
             switch (exchanger_tile.type)
             {
                 case ExchangerTile.Type.PLAYER1:
-                    direction_player_1 = exchanger_tile.direction;
+                    direction_player_1 = exchanger_tile.GetDirection();
                     break;
                 case ExchangerTile.Type.PLAYER2:
-                    direction_player_2 = exchanger_tile.direction;
+                    direction_player_2 = exchanger_tile.GetDirection();
                     break;
             }
         }
@@ -135,7 +135,7 @@ public class Exchanger : MonoBehaviour
             moves_panel_player_2.GetComponent<MovesPanel>().ExchangeMoveTile(direction_player_1, direction_player_2);
             foreach (GameObject panel_elem in panel)
             {
-                panel_elem.GetComponent<ExchangerTile>().direction = Move.Direction.NO_DIRECTION;
+                panel_elem.GetComponent<ExchangerTile>().SetDirection(Move.Direction.NO_DIRECTION);
             }
         }
 

@@ -37,7 +37,7 @@ public class MoveWithCounter : MonoBehaviour
     void CreateMoveWithCounter()
     {
         move_tile.type = move_type;
-        move_tile.direction = move_direction;
+        move_tile.SetDirection(move_direction);
 
         counter_panel = new GameObject[max_counters];
 
@@ -60,7 +60,7 @@ public class MoveWithCounter : MonoBehaviour
     void UpdateMoveWithCounter()
     {
         move_tile.type = move_type;
-        move_tile.direction = move_direction;
+        move_tile.SetDirection(move_direction);
 
         for (int x = 0; x < number_available; x++)
         {

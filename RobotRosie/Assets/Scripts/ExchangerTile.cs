@@ -6,16 +6,24 @@ public class ExchangerTile : MonoBehaviour
 {
     public enum Type { PLAYER1, PLAYER2 }
 
+    public Type type;
+
     public Sprite[] imgs_types;
 
-    public Type type;
-    public Move.Direction direction = Move.Direction.NO_DIRECTION;
+    public Move move;
 
-    public GameObject move;
+    public Move.Direction GetDirection()
+    {
+        return move.direction;
+    }
+
+    public void SetDirection(Move.Direction direction)
+    {
+        move.direction = direction;
+    }
 
     void ChangeImg()
     {
-        move.GetComponent<Move>().direction = direction;
         GetComponent<SpriteRenderer>().sprite = imgs_types[(int)type];
     }
 
