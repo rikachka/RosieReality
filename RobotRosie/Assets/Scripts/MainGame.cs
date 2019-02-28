@@ -61,17 +61,17 @@ public class MainGame : MonoBehaviour
     {
         MovesPanel.MoveInfo[] moves_info_1 = 
         {
-            new MovesPanel.MoveInfo(MoveTile.Direction.FORWARD, 6, 6),
-            new MovesPanel.MoveInfo(MoveTile.Direction.LEFT, 1, 1),
-            new MovesPanel.MoveInfo(MoveTile.Direction.RIGHT, 2, 2)
+            new MovesPanel.MoveInfo(MoveTile.Direction.FORWARD, 8, 8),
+            new MovesPanel.MoveInfo(MoveTile.Direction.LEFT, 0, 0),
+            new MovesPanel.MoveInfo(MoveTile.Direction.RIGHT, 1, 1)
         };
         moves_panel_player_1.GetComponent<MovesPanel>().CreateMovesPanel(moves_info_1);
 
         MovesPanel.MoveInfo[] moves_info_2 = 
         {
-            new MovesPanel.MoveInfo(MoveTile.Direction.FORWARD, 8, 8),
-            new MovesPanel.MoveInfo(MoveTile.Direction.LEFT, 1, 1),
-            new MovesPanel.MoveInfo(MoveTile.Direction.RIGHT, 0, 0)
+            new MovesPanel.MoveInfo(MoveTile.Direction.FORWARD, 6, 6),
+            new MovesPanel.MoveInfo(MoveTile.Direction.LEFT, 2, 2),
+            new MovesPanel.MoveInfo(MoveTile.Direction.RIGHT, 1, 1)
         };
         moves_panel_player_2.GetComponent<MovesPanel>().CreateMovesPanel(moves_info_2);
 
