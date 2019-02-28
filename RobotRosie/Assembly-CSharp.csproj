@@ -65,6 +65,8 @@
     <Compile Include="Assets\Scripts\ExchangerTile.cs" />
     <Compile Include="Assets\Scripts\ExchangerTileClick.cs" />
     <Compile Include="Assets\Scripts\Field.cs" />
+    <Compile Include="Assets\Scripts\FieldTile.cs" />
+    <Compile Include="Assets\Scripts\FieldTileClick.cs" />
     <Compile Include="Assets\Scripts\MainGame.cs" />
     <Compile Include="Assets\Scripts\Move.cs" />
     <Compile Include="Assets\Scripts\MovesPanel.cs" />
@@ -72,8 +74,6 @@
     <Compile Include="Assets\Scripts\MoveTileClick.cs" />
     <Compile Include="Assets\Scripts\MoveWithCounter.cs" />
     <Compile Include="Assets\Scripts\Robot.cs" />
-    <Compile Include="Assets\Scripts\Tile.cs" />
-    <Compile Include="Assets\Scripts\TileClick.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/rikachka/Информация/Internship/Angel.co/2019/RosieReality/2. Coding/RoboGame3/RosieReality/RobotRosie/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

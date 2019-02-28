@@ -76,13 +76,13 @@ public class MainGame : MonoBehaviour
         moves_panel_player_2.GetComponent<MovesPanel>().CreateMovesPanel(moves_info_2);
 
 
-        Tile.Type[,] tiles_types =
+        FieldTile.Type[,] tiles_types =
         {
-            { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.END },
-            { Tile.Type.PLAYER1, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.PLAYER1 },
-            { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1, Tile.Type.PLAYER2 },
-            { Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.PLAYER1 },
-            { Tile.Type.EMPTY, Tile.Type.START, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1 },
+            { FieldTile.Type.PLAYER1, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER2, FieldTile.Type.END },
+            { FieldTile.Type.PLAYER1, FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.PLAYER1 },
+            { FieldTile.Type.PLAYER1, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER1, FieldTile.Type.PLAYER2 },
+            { FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.PLAYER1 },
+            { FieldTile.Type.EMPTY, FieldTile.Type.START, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER1 },
         };
         field.GetComponent<Field>().CreateTilesTypes(tiles_types);
     }
@@ -106,13 +106,13 @@ public class MainGame : MonoBehaviour
         moves_panel_player_2.GetComponent<MovesPanel>().CreateMovesPanel(moves_info_2);
 
 
-        Tile.Type[,] tiles_types =
+        FieldTile.Type[,] tiles_types =
         {
-            { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.END },
-            { Tile.Type.PLAYER1, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.PLAYER1 },
-            { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1, Tile.Type.PLAYER2 },
-            { Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.PLAYER1 },
-            { Tile.Type.EMPTY, Tile.Type.START, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1 },
+            { FieldTile.Type.PLAYER1, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER2, FieldTile.Type.END },
+            { FieldTile.Type.PLAYER1, FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.PLAYER1 },
+            { FieldTile.Type.PLAYER1, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER1, FieldTile.Type.PLAYER2 },
+            { FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.PLAYER1 },
+            { FieldTile.Type.EMPTY, FieldTile.Type.START, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER1 },
         };
         field.GetComponent<Field>().CreateTilesTypes(tiles_types);
 

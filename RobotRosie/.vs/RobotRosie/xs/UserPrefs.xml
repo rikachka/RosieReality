@@ -1,10 +1,10 @@
 ﻿<Properties StartupConfiguration="{239BBA5D-E66C-1961-1799-1C216ECA8E00}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ExchangerTile.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MoveTile.cs">
     <Files>
-      <File FileName="Assets/Scripts/Move.cs" Line="17" Column="58" />
-      <File FileName="Assets/Scripts/Robot.cs" Line="21" Column="26" />
-      <File FileName="Assets/Scripts/Tile.cs" Line="75" Column="32" />
-      <File FileName="Assets/Scripts/ExchangerTile.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/FieldTile.cs" Line="9" Column="32" />
+      <File FileName="Assets/Scripts/FieldTileClick.cs" Line="5" Column="26" />
+      <File FileName="Assets/Scripts/Field.cs" Line="86" Column="70" />
+      <File FileName="Assets/Scripts/MoveTile.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -71,22 +71,22 @@ public class Field : MonoBehaviour
             {
                 foreach (MoveTile.Direction direction in directions[y, x])
                 {
-                    field[y, x].GetComponent<Tile>().AddDirection(direction);
+                    field[y, x].GetComponent<FieldTile>().AddDirection(direction);
                 }
             }
         }
     }
 
-    public void CreateTilesTypes(Tile.Type[,] tiles_types)
+    public void CreateTilesTypes(FieldTile.Type[,] tiles_types)
     {
         for (int y = 0; y < size; y++)
         {
             for (int x = 0; x < size; x++)
             {
-                Tile tile = field[y, x].GetComponent<Tile>();
+                FieldTile tile = field[y, x].GetComponent<FieldTile>();
                 tile.type = tiles_types[y, x];
                 tile.ClearDirections();
-                if (tile.type == Tile.Type.START)
+                if (tile.type == FieldTile.Type.START)
                 {
                     tile.AddDirection(MoveTile.Direction.FORWARD);
                 }
@@ -101,7 +101,7 @@ public class Field : MonoBehaviour
         {
             for (int x = 0; x < size; x++)
             {
-                Tile tile = field[y, x].GetComponent<Tile>();
+                FieldTile tile = field[y, x].GetComponent<FieldTile>();
                 tile.robot.GetComponent<Robot>().type = Robot.Type.EMPTY;
             }
         }
@@ -119,8 +119,8 @@ public class Field : MonoBehaviour
                 Vector3 coords = new Vector3(left_top_coords.x + x * step_factor, left_top_coords.y - y * step_factor, left_top_coords.z);
                 field[y, x] = Instantiate(init_tile, coords, new Quaternion());
 
-                field[y, x].GetComponent<TileClick>().parent = this.gameObject;
-                field[y, x].GetComponent<TileClick>().parent_point = new Point(x, y);
+                field[y, x].GetComponent<FieldTileClick>().parent = this.gameObject;
+                field[y, x].GetComponent<FieldTileClick>().parent_point = new Point(x, y);
             }
         }
     }
@@ -129,15 +129,15 @@ public class Field : MonoBehaviour
     {
         int x = point.x;
         int y = point.y;
-        Tile tile = field[y, x].GetComponent<Tile>();
+        FieldTile tile = field[y, x].GetComponent<FieldTile>();
         MovesPanel moves_panel;
 
         switch (tile.type)
         {
-            case Tile.Type.PLAYER1:
+            case FieldTile.Type.PLAYER1:
                 moves_panel = moves_panel_player_1.GetComponent<MovesPanel>();
                 break;
-            case Tile.Type.PLAYER2:
+            case FieldTile.Type.PLAYER2:
                 moves_panel = moves_panel_player_2.GetComponent<MovesPanel>();
                 break;
             default:
@@ -147,7 +147,7 @@ public class Field : MonoBehaviour
         MoveTile.Direction active_direction = moves_panel.TakeActiveMoveTile();
         if (active_direction == MoveTile.Direction.DELETE)
         {
-            MoveTile.Direction returned_direction = field[y, x].GetComponent<Tile>().DeleteDirection();
+            MoveTile.Direction returned_direction = field[y, x].GetComponent<FieldTile>().DeleteDirection();
             if (returned_direction != MoveTile.Direction.NO_DIRECTION)
             {
                 moves_panel.ReturnMoveTile(returned_direction);
@@ -156,7 +156,7 @@ public class Field : MonoBehaviour
         }
         else if (active_direction != MoveTile.Direction.NO_DIRECTION)
         {
-            field[y, x].GetComponent<Tile>().AddDirection(active_direction);
+            field[y, x].GetComponent<FieldTile>().AddDirection(active_direction);
         }
     }
 
@@ -166,7 +166,7 @@ public class Field : MonoBehaviour
         {
             for (int x = 0; x < size; x++)
             {
-                if (field[y, x].GetComponent<Tile>().type == Tile.Type.START)
+                if (field[y, x].GetComponent<FieldTile>().type == FieldTile.Type.START)
                 {
                     return new Point(x, y);
                 }
@@ -178,20 +178,20 @@ public class Field : MonoBehaviour
     public bool CheckWinningCondition()
     {
         Point point = FindStartTile();
-        Robot robot = field[point.y, point.x].GetComponent<Tile>().robot.GetComponent<Robot>();
+        Robot robot = field[point.y, point.x].GetComponent<FieldTile>().robot.GetComponent<Robot>();
 
         bool[,] visited = new bool[size, size];
         while (!visited[point.y, point.x])
         {
             visited[point.y, point.x] = true;
 
-            Tile tile = field[point.y, point.x].GetComponent<Tile>();
-            if (tile.type == Tile.Type.EMPTY) return false;
+            FieldTile tile = field[point.y, point.x].GetComponent<FieldTile>();
+            if (tile.type == FieldTile.Type.EMPTY) return false;
 
             robot = tile.MoveRobotThrough(robot.direction);
             if (robot.type == Robot.Type.STOP)
             {
-                if (tile.type == Tile.Type.END
+                if (tile.type == FieldTile.Type.END
                         && moves_panel_player_1.GetComponent<MovesPanel>().NumberAvailableMoves() == 0
                         && moves_panel_player_2.GetComponent<MovesPanel>().NumberAvailableMoves() == 0) 
                 { 
