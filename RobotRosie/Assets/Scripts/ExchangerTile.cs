@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class ExchangerTile : MonoBehaviour
 {
-    public enum Direction { NO_DIRECTION, FORWARD, LEFT, RIGHT }
     public enum Type { PLAYER1, PLAYER2 }
 
     public Sprite[] imgs_types;
     public Sprite[] imgs_directions;
 
-    public Type type = 0;
-    public Direction direction = 0;
+    public Type type;
+    public MoveTile.Direction direction = MoveTile.Direction.NO_DIRECTION;
 
     GameObject back;
 
@@ -21,7 +20,12 @@ public class ExchangerTile : MonoBehaviour
         {
             back.GetComponent<SpriteRenderer>().sprite = imgs_types[(int)type];
         }
-        if (imgs_directions.Length > (int)direction)
+
+        if (direction == MoveTile.Direction.NO_DIRECTION)
+        {
+            GetComponent<SpriteRenderer>().sprite = null;
+        }
+        else if (imgs_directions.Length > (int)direction)
         {
             GetComponent<SpriteRenderer>().sprite = imgs_directions[(int)direction];
         }

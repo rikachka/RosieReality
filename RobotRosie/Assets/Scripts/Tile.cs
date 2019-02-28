@@ -90,11 +90,6 @@ public class Tile : MonoBehaviour
     {
         last_direction_tile = transform.Find("LastDirection").gameObject;
 
-        //if (type == Type.START)
-        //{
-        //    robot.GetComponent<Robot>().type = Robot.Type.MOVE;
-        //}
-
         ChangeImg();
     }
 

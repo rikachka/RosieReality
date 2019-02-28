@@ -17,6 +17,7 @@ public class MoveWithCounter : MonoBehaviour
 
     float step_factor = 0.5F;
     float shift_main = 1;
+    int max_counters = 15;
 
     public GameObject GetMoveTile()
     {
@@ -38,7 +39,7 @@ public class MoveWithCounter : MonoBehaviour
         move_tile.type = move_type;
         move_tile.direction = move_direction;
 
-        counter_panel = new GameObject[number_max];
+        counter_panel = new GameObject[max_counters];
 
         for (int x = 0; x < number_available; x++)
         {
@@ -48,6 +49,11 @@ public class MoveWithCounter : MonoBehaviour
         for (int x = number_available; x < number_max; x++)
         {
             CreateMoveWithCounter(x, Counter.Type.AVAILABLE);
+        }
+
+        for (int x = number_max; x < max_counters; x++)
+        {
+            CreateMoveWithCounter(x, Counter.Type.NO_COUNTER);
         }
     }
 
@@ -64,6 +70,11 @@ public class MoveWithCounter : MonoBehaviour
         for (int x = number_available; x < number_max; x++)
         {
             counter_panel[x].GetComponent<Counter>().img_type = Counter.Type.AVAILABLE;
+        }
+
+        for (int x = number_max; x < max_counters; x++)
+        {
+            counter_panel[x].GetComponent<Counter>().img_type = Counter.Type.NO_COUNTER;
         }
     }
 

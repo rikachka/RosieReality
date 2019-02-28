@@ -28,7 +28,6 @@ public class MovesPanel : MonoBehaviour
 
     int active_in_panel = NO_ACTIVE;
 
-    int size = 4;
     float step_factor = 1.1F;
 
     void CreateMoveTile(int y, MoveInfo move_tile_info, MoveTile.Type move_tile_type) 
@@ -138,6 +137,23 @@ public class MovesPanel : MonoBehaviour
             {
                 move_with_counter.number_available++;
                 return;
+            }
+        }
+    }
+
+    public void ExchangeMoveTile(MoveTile.Direction received_direction, MoveTile.Direction given_direction)
+    {
+        foreach (GameObject panel_elem in panel)
+        {
+            MoveWithCounter move_with_counter = panel_elem.GetComponent<MoveWithCounter>();
+            if (move_with_counter.move_direction == received_direction)
+            {
+                move_with_counter.number_available++;
+                move_with_counter.number_max++;
+            }
+            if (move_with_counter.move_direction == given_direction)
+            {
+                move_with_counter.number_max--;
             }
         }
     }
