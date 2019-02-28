@@ -14,7 +14,8 @@ public class Tile : MonoBehaviour
     public Robot.Type robot_type = Robot.Type.EMPTY;
 
     GameObject last_direction_tile; 
-    public Robot robot;
+    //public Robot robot;
+    public GameObject robot;
 
     List<MoveTile.Direction> directions = new List<MoveTile.Direction>();
 
@@ -42,6 +43,7 @@ public class Tile : MonoBehaviour
     public Robot MoveRobotThrough(Robot.Direction prev_direction)
     {
         int direction_change = 0;
+        Robot robot_component = robot.GetComponent<Robot>();
         foreach (MoveTile.Direction direction in directions)
         {
             switch (direction)
@@ -53,20 +55,23 @@ public class Tile : MonoBehaviour
                     direction_change--;
                     break;
                 case MoveTile.Direction.FORWARD:
-                    robot.FindDirection(prev_direction, direction_change);
-                    return robot;
+                    robot_component.FindDirection(prev_direction, direction_change);
+                    //ChangeImg();
+                    return robot_component;
                 default:
-                    robot.type = Robot.Type.STOP;
+                    robot_component.type = Robot.Type.STOP;
                     break;
             }
         }
-        robot.type = Robot.Type.STOP;
-        return robot;
+        robot_component.type = Robot.Type.STOP;
+        //ChangeImg();
+        return robot_component;
     }
 
     void ChangeImg()
     {
-        robot.type = robot_type;
+        //robot.GetComponent<Robot>().type = robot_type;
+        //robot.type = robot_type;
 
         if (imgs_types.Length > (int)type)
         {
@@ -88,8 +93,10 @@ public class Tile : MonoBehaviour
     void Start()
     {
         last_direction_tile = transform.Find("LastDirection").gameObject;
-        robot = transform.Find("Robot").GetComponent<Robot>();
+        //robot = transform.Find("Robot").GetComponent<Robot>();
+        //robot = transform.Find("Robot");
 
+        robot.GetComponent<Robot>().type = robot_type;
         ChangeImg();
     }
 

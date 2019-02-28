@@ -32,7 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1345798834358963969}
-  - {fileID: 8135594210264614971}
+  - {fileID: 1573847835899553059}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -107,7 +107,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 82d6e8743e5474cdd94887b1d0396710, type: 3}
   - {fileID: 21300000, guid: c13576b07d4ea4061a463e8c7f1a68ee, type: 3}
   - {fileID: 21300000, guid: d48b772b52dc94dfbb2634d3747ad67d, type: 3}
-  img_type: 0
+  type: 0
+  robot_type: 0
+  robot: {fileID: 7156911541342099713}
 --- !u!114 &4986371007860780792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,7 +230,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &4614296607224419050
+--- !u!1001 &2682253950805458930
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -302,9 +304,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3414b2c2bdf224735bb7bafc54ed2da3, type: 3}
---- !u!4 &8135594210264614971 stripped
+--- !u!1 &7156911541342099713 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5074205349019608819, guid: 3414b2c2bdf224735bb7bafc54ed2da3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2682253950805458930}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1573847835899553059 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3525801211270453969, guid: 3414b2c2bdf224735bb7bafc54ed2da3,
     type: 3}
-  m_PrefabInstance: {fileID: 4614296607224419050}
+  m_PrefabInstance: {fileID: 2682253950805458930}
   m_PrefabAsset: {fileID: 0}

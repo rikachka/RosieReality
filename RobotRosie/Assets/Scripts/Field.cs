@@ -165,7 +165,7 @@ public class Field : MonoBehaviour
     public bool CheckWinningCondition()
     {
         Point point = FindStartTile();
-        Robot robot = field[point.y, point.x].GetComponent<Tile>().robot;
+        Robot robot = field[point.y, point.x].GetComponent<Tile>().robot.GetComponent<Robot>();
 
         bool[,] visited = new bool[size, size];
         while (!visited[point.y, point.x])
