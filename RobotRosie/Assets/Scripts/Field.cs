@@ -26,42 +26,42 @@ public class Field : MonoBehaviour
 
     public void CreateTestDirections()
     {
-        List<MoveTile.Direction>[,] directions =
+        List<Move.Direction>[,] directions =
         {
             {
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.RIGHT, MoveTile.Direction.FORWARD }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ })
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.RIGHT, Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ })
             },
             {
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ })
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ })
             },
             {
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.RIGHT, MoveTile.Direction.FORWARD }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.LEFT, MoveTile.Direction.FORWARD })
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.RIGHT, Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.LEFT, Move.Direction.FORWARD })
             },
             {
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD })
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD })
             },
             {
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.FORWARD }),
-                new List<MoveTile.Direction>(new MoveTile.Direction[]{ MoveTile.Direction.LEFT, MoveTile.Direction.FORWARD })
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.LEFT, Move.Direction.FORWARD })
             }
         };
 
@@ -69,7 +69,7 @@ public class Field : MonoBehaviour
         {
             for (int x = 0; x < size; x++)
             {
-                foreach (MoveTile.Direction direction in directions[y, x])
+                foreach (Move.Direction direction in directions[y, x])
                 {
                     field[y, x].GetComponent<FieldTile>().AddDirection(direction);
                 }
@@ -88,7 +88,7 @@ public class Field : MonoBehaviour
                 tile.ClearDirections();
                 if (tile.type == FieldTile.Type.START)
                 {
-                    tile.AddDirection(MoveTile.Direction.FORWARD);
+                    tile.AddDirection(Move.Direction.FORWARD);
                 }
                 tile.robot.GetComponent<Robot>().type = Robot.Type.EMPTY;
             }
@@ -144,17 +144,17 @@ public class Field : MonoBehaviour
                 return;
         }
 
-        MoveTile.Direction active_direction = moves_panel.TakeActiveMoveTile();
-        if (active_direction == MoveTile.Direction.DELETE)
+        Move.Direction active_direction = moves_panel.TakeActiveMoveTile();
+        if (active_direction == Move.Direction.DELETE)
         {
-            MoveTile.Direction returned_direction = field[y, x].GetComponent<FieldTile>().DeleteDirection();
-            if (returned_direction != MoveTile.Direction.NO_DIRECTION)
+            Move.Direction returned_direction = field[y, x].GetComponent<FieldTile>().DeleteDirection();
+            if (returned_direction != Move.Direction.NO_DIRECTION)
             {
                 moves_panel.ReturnMoveTile(returned_direction);
             }
 
         }
-        else if (active_direction != MoveTile.Direction.NO_DIRECTION)
+        else if (active_direction != Move.Direction.NO_DIRECTION)
         {
             field[y, x].GetComponent<FieldTile>().AddDirection(active_direction);
         }

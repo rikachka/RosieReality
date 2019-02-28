@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveWithCounter : MonoBehaviour
 {
     public MoveTile.Type move_type = 0;
-    public MoveTile.Direction move_direction = 0;
+    public Move.Direction move_direction = 0;
 
     public int number_max = 0;
     public int number_available = 0;

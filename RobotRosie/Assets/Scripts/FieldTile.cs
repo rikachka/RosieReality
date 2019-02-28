@@ -7,55 +7,54 @@ public class FieldTile : MonoBehaviour
     public enum Type { EMPTY, PLAYER1, PLAYER2, START, END }
 
     public Sprite[] imgs_types;
-    public Sprite[] imgs_directions;
 
-    public Type type = 0;
+    public Type type;
 
     public GameObject robot;
 
     // Object showing the last movement attached to the tile.
     public GameObject last_direction_tile;
     // Container of movements attached to the tile.
-    List<MoveTile.Direction> directions = new List<MoveTile.Direction>();
+    List<Move.Direction> directions = new List<Move.Direction>();
 
-    public void AddDirection(MoveTile.Direction direction)
+    public void AddDirection(Move.Direction direction)
     {
         directions.Add(direction);
     }
 
-    public MoveTile.Direction DeleteDirection()
+    public Move.Direction DeleteDirection()
     {
         if (directions.Count > 0)
         {
-            MoveTile.Direction direction = directions[directions.Count - 1];
+            Move.Direction direction = directions[directions.Count - 1];
             directions.RemoveAt(directions.Count - 1);
             return direction;
         }
         else
         {
-            return MoveTile.Direction.NO_DIRECTION;
+            return Move.Direction.NO_DIRECTION;
         }
     }
 
     public void ClearDirections()
     {
-        directions = new List<MoveTile.Direction>();
+        directions = new List<Move.Direction>();
     }
 
     public Robot MoveRobotThrough(Robot.Direction prev_direction)
     {
         int direction_change = 0;
-        foreach (MoveTile.Direction direction in directions)
+        foreach (Move.Direction direction in directions)
         {
             switch (direction)
             {
-                case MoveTile.Direction.LEFT:
+                case Move.Direction.LEFT:
                     direction_change++;
                     break;
-                case MoveTile.Direction.RIGHT:
+                case Move.Direction.RIGHT:
                     direction_change--;
                     break;
-                case MoveTile.Direction.FORWARD:
+                case Move.Direction.FORWARD:
                     robot.GetComponent<Robot>().FindDirection(prev_direction, direction_change);
                     return robot.GetComponent<Robot>();
                 default:
@@ -85,7 +84,7 @@ public class FieldTile : MonoBehaviour
         }
         else
         {
-            MoveTile.Direction last_direction = directions[directions.Count - 1];
+            Move.Direction last_direction = directions[directions.Count - 1];
             last_direction_tile.GetComponent<Move>().direction = (Move.Direction)last_direction;
         }
     }

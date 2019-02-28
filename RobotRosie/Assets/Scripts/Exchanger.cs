@@ -53,20 +53,20 @@ public class Exchanger : MonoBehaviour
                 return;
         }
 
-        MoveTile.Direction active_direction = moves_panel.TakeActiveMoveTile();
+        Move.Direction active_direction = moves_panel.TakeActiveMoveTile();
 
-        if (active_direction == MoveTile.Direction.NO_DIRECTION) return;
+        if (active_direction == Move.Direction.NO_DIRECTION) return;
 
-        MoveTile.Direction returned_direction = exchanger_tile.direction;
+        Move.Direction returned_direction = exchanger_tile.direction;
 
-        if (returned_direction != MoveTile.Direction.NO_DIRECTION)
+        if (returned_direction != Move.Direction.NO_DIRECTION)
         {
             moves_panel.ReturnMoveTile(returned_direction);
         }
 
-        if (active_direction == MoveTile.Direction.DELETE)
+        if (active_direction == Move.Direction.DELETE)
         {
-            exchanger_tile.direction = MoveTile.Direction.NO_DIRECTION;
+            exchanger_tile.direction = Move.Direction.NO_DIRECTION;
         }
         else 
         {
@@ -81,7 +81,7 @@ public class Exchanger : MonoBehaviour
         //foreach (GameObject panel_elem in panel)
         //{
         //    ExchangerTile exchanger_tile = panel_elem.GetComponent<ExchangerTile>();
-        //    if (exchanger_tile.direction == MoveTile.Direction.NO_DIRECTION) return;
+        //    if (exchanger_tile.direction == Move.Direction.NO_DIRECTION) return;
         //}
 
         //foreach (GameObject panel_elem in panel)
@@ -101,19 +101,19 @@ public class Exchanger : MonoBehaviour
         //            return;
         //    }
         //    moves_panel.ReturnMoveTile(exchanger_tile.direction);
-        //    exchanger_tile.direction = MoveTile.Direction.NO_DIRECTION;
+        //    exchanger_tile.direction = Move.Direction.NO_DIRECTION;
         //}
 
 
         //foreach (GameObject panel_elem in panel)
         //{
         //    ExchangerTile exchanger_tile = panel_elem.GetComponent<ExchangerTile>();
-        //    if (exchanger_tile.direction == MoveTile.Direction.NO_DIRECTION) return;
+        //    if (exchanger_tile.direction == Move.Direction.NO_DIRECTION) return;
         //}
 
 
-        MoveTile.Direction direction_player_1 = MoveTile.Direction.NO_DIRECTION;
-        MoveTile.Direction direction_player_2 = MoveTile.Direction.NO_DIRECTION;
+        Move.Direction direction_player_1 = Move.Direction.NO_DIRECTION;
+        Move.Direction direction_player_2 = Move.Direction.NO_DIRECTION;
         foreach (GameObject panel_elem in panel)
         {
             ExchangerTile exchanger_tile = panel_elem.GetComponent<ExchangerTile>(); 
@@ -128,14 +128,14 @@ public class Exchanger : MonoBehaviour
             }
         }
 
-        if (direction_player_1 != MoveTile.Direction.NO_DIRECTION 
-                && direction_player_2 != MoveTile.Direction.NO_DIRECTION)
+        if (direction_player_1 != Move.Direction.NO_DIRECTION 
+                && direction_player_2 != Move.Direction.NO_DIRECTION)
         {
             moves_panel_player_1.GetComponent<MovesPanel>().ExchangeMoveTile(direction_player_2, direction_player_1);
             moves_panel_player_2.GetComponent<MovesPanel>().ExchangeMoveTile(direction_player_1, direction_player_2);
             foreach (GameObject panel_elem in panel)
             {
-                panel_elem.GetComponent<ExchangerTile>().direction = MoveTile.Direction.NO_DIRECTION;
+                panel_elem.GetComponent<ExchangerTile>().direction = Move.Direction.NO_DIRECTION;
             }
         }
 
