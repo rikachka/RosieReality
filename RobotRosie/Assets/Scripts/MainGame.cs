@@ -6,7 +6,8 @@ public class MainGame : MonoBehaviour
 {
     public enum State { GAME, CHECK, WIN }
 
-    public GameObject moves_panel_player_1, moves_panel_player_2, field;
+    public MovesPanel moves_panel_player_1, moves_panel_player_2; 
+    public Field field;
 
     State state = State.GAME;
 
@@ -19,8 +20,10 @@ public class MainGame : MonoBehaviour
         Rect location_box = new Rect(new Vector2(10, 10), new Vector2(Screen.width - 20, Screen.height - 20));
         Rect location_label = new Rect(new Vector2(screen_centre_x - 110, screen_centre_y - 30), new Vector2(220, 30));
 
-        switch (state) {
+        switch (state)
+        {
             case State.WIN:
+                // If win conditions are met, show congratulations and propose to start new game.
                 GUI.Box(location_box, "");
 
                 GUIStyle gui_style = new GUIStyle();
@@ -35,9 +38,10 @@ public class MainGame : MonoBehaviour
                 }
                 break;
             case State.GAME:
-                if (GUI.Button(location_button, "Check"))
+                // Default game state. It is possible to place, remove or exchange move tiles.
+                if (GUI.Button(location_button, "Play"))
                 {
-                    if (field.GetComponent<Field>().CheckWinningCondition())
+                    if (field.CheckWinningCondition())
                     {
                         state = State.WIN;
                     }
@@ -48,33 +52,39 @@ public class MainGame : MonoBehaviour
                 }
                 break;
             case State.CHECK:
+                // If robot does not reach the end tile after the player pressed the “play” button, 
+                // show robot's route and the button to continue the game (place or remove move tiles 
+                // before “playing” the program once more).
                 GUI.Box(location_box, "");
                 if (GUI.Button(location_button, "Continue"))
                 {
-                    field.GetComponent<Field>().ClearRobotRoute();
+                    field.ClearRobotRoute();
                     state = State.GAME;
                 }
                 break;
         }
     }
 
+
+
+    // Hardcoded new game.
     void CreateNewGame()
     {
-        MovesPanel.MoveWithCounterInfo[] moves_info_1 = 
+        MovesPanel.MoveWithCounterInfo[] moves_info_1 =
         {
             new MovesPanel.MoveWithCounterInfo(Move.Direction.FORWARD, 8, 8),
             new MovesPanel.MoveWithCounterInfo(Move.Direction.LEFT, 0, 0),
             new MovesPanel.MoveWithCounterInfo(Move.Direction.RIGHT, 1, 1)
         };
-        moves_panel_player_1.GetComponent<MovesPanel>().UpdateMovesPanel(moves_info_1);
+        moves_panel_player_1.UpdateMovesPanel(moves_info_1);
 
-        MovesPanel.MoveWithCounterInfo[] moves_info_2 = 
+        MovesPanel.MoveWithCounterInfo[] moves_info_2 =
         {
             new MovesPanel.MoveWithCounterInfo(Move.Direction.FORWARD, 6, 6),
             new MovesPanel.MoveWithCounterInfo(Move.Direction.LEFT, 2, 2),
             new MovesPanel.MoveWithCounterInfo(Move.Direction.RIGHT, 1, 1)
         };
-        moves_panel_player_2.GetComponent<MovesPanel>().UpdateMovesPanel(moves_info_2);
+        moves_panel_player_2.UpdateMovesPanel(moves_info_2);
 
 
         FieldTile.Type[,] tiles_types =
@@ -85,9 +95,10 @@ public class MainGame : MonoBehaviour
             { FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.PLAYER1 },
             { FieldTile.Type.EMPTY, FieldTile.Type.START, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER1 },
         };
-        field.GetComponent<Field>().CreateTilesTypes(tiles_types);
+        field.CreateTilesTypes(tiles_types);
     }
 
+    // Hardcoded solved game to test win conditions.
     void CreateSolvedGame()
     {
         MovesPanel.MoveWithCounterInfo[] moves_info_1 =
@@ -96,7 +107,7 @@ public class MainGame : MonoBehaviour
             new MovesPanel.MoveWithCounterInfo(Move.Direction.LEFT, 1, 0),
             new MovesPanel.MoveWithCounterInfo(Move.Direction.RIGHT, 2, 0)
         };
-        moves_panel_player_1.GetComponent<MovesPanel>().UpdateMovesPanel(moves_info_1);
+        moves_panel_player_1.UpdateMovesPanel(moves_info_1);
 
         MovesPanel.MoveWithCounterInfo[] moves_info_2 =
         {
@@ -104,7 +115,7 @@ public class MainGame : MonoBehaviour
             new MovesPanel.MoveWithCounterInfo(Move.Direction.LEFT, 1, 0),
             new MovesPanel.MoveWithCounterInfo(Move.Direction.RIGHT, 0, 0)
         };
-        moves_panel_player_2.GetComponent<MovesPanel>().UpdateMovesPanel(moves_info_2);
+        moves_panel_player_2.UpdateMovesPanel(moves_info_2);
 
 
         FieldTile.Type[,] tiles_types =
@@ -115,7 +126,7 @@ public class MainGame : MonoBehaviour
             { FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.EMPTY, FieldTile.Type.PLAYER1 },
             { FieldTile.Type.EMPTY, FieldTile.Type.START, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER2, FieldTile.Type.PLAYER1 },
         };
-        field.GetComponent<Field>().CreateTilesTypes(tiles_types);
+        field.CreateTilesTypes(tiles_types);
 
 
         List<Move.Direction>[,] directions =
@@ -156,22 +167,18 @@ public class MainGame : MonoBehaviour
                 new List<Move.Direction>(new Move.Direction[]{ Move.Direction.LEFT, Move.Direction.FORWARD })
             }
         };
-        field.GetComponent<Field>().UpdateDirections(directions);
+        field.UpdateDirections(directions);
     }
 
-    // Start is called before the first frame update
+
+
     void Start()
     {
-        field.GetComponent<Field>().CreateField();
-        moves_panel_player_1.GetComponent<MovesPanel>().CreateMovesPanel();
-        moves_panel_player_2.GetComponent<MovesPanel>().CreateMovesPanel();
+        field.CreateField();
+        moves_panel_player_1.CreateMovesPanel();
+        moves_panel_player_2.CreateMovesPanel();
+
         //CreateNewGame();
         CreateSolvedGame();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
