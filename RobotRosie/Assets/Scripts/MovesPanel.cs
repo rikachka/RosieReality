@@ -43,8 +43,8 @@ public class MovesPanel : MonoBehaviour
         move_with_counter.number_max = move_tile_info.number_max;
         move_with_counter.number_available = move_tile_info.number_available;
 
-        move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().parent_panel = this.gameObject;
-        move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().coord_in_panel = y;
+        move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().parent = this.gameObject;
+        move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().parent_index = y;
     }
 
     public void CreateMovesPanel(MoveInfo[] moves_info)

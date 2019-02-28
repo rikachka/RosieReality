@@ -21,8 +21,8 @@ public class Exchanger : MonoBehaviour
         ExchangerTile exchanger_tile = panel[x].GetComponent<ExchangerTile>();
         exchanger_tile.type = exchanger_tile_type;
 
-        exchanger_tile.GetComponent<ExchangerTileClick>().parent_panel = this.gameObject;
-        exchanger_tile.GetComponent<ExchangerTileClick>().coord_in_panel = x;
+        exchanger_tile.GetComponent<ExchangerTileClick>().parent = this.gameObject;
+        exchanger_tile.GetComponent<ExchangerTileClick>().index = x;
     }
 
     public void CreateExchanger()

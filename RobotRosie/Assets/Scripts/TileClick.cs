@@ -6,25 +6,13 @@ public class TileClick : MonoBehaviour
 {
     public GameObject parent;
 
-    public int x, y;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    { 
-
-    }
+    public Point parent_point;
 
     private void OnMouseDown()
     {
         if (parent != null)
         {
-            parent.GetComponent<Field>().Click(x, y);
+            parent.GetComponent<Field>().Click(parent_point);
         }
     }
 }

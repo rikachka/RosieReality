@@ -2,6 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct Point
+{
+    public int x, y;
+
+    public Point(int x_, int y_)
+    {
+        x = x_;
+        y = y_;
+    }
+}
+
 public class Field : MonoBehaviour
 {
     public GameObject init_tile;
@@ -12,17 +23,6 @@ public class Field : MonoBehaviour
 
     int size = 5;
     float step_factor = 1.1F;
-
-    struct Point
-    {
-        public int x, y;
-
-        public Point(int x_, int y_)
-        {
-            x = x_;
-            y = y_;
-        }
-    }
 
     public void CreateTestDirections()
     {
@@ -120,14 +120,15 @@ public class Field : MonoBehaviour
                 field[y, x] = Instantiate(init_tile, coords, new Quaternion());
 
                 field[y, x].GetComponent<TileClick>().parent = this.gameObject;
-                field[y, x].GetComponent<TileClick>().x = x;
-                field[y, x].GetComponent<TileClick>().y = y;
+                field[y, x].GetComponent<TileClick>().parent_point = new Point(x, y);
             }
         }
     }
 
-    public void Click(int x, int y)
+    public void Click(Point point)
     {
+        int x = point.x;
+        int y = point.y;
         Tile tile = field[y, x].GetComponent<Tile>();
         MovesPanel moves_panel;
 

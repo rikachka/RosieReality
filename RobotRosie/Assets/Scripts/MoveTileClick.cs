@@ -4,26 +4,14 @@ using UnityEngine;
 
 public class MoveTileClick : MonoBehaviour
 {
-    public GameObject parent_panel;
-    public int coord_in_panel;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    public GameObject parent;
+    public int parent_index;
 
     private void OnMouseDown()
     {
-        if (parent_panel != null)
+        if (parent != null)
         {
-            parent_panel.GetComponent<MovesPanel>().Click(coord_in_panel);
+            parent.GetComponent<MovesPanel>().Click(parent_index);
         }
     }
 }
