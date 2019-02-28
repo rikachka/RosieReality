@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Point used to identify element in the game field.
 public struct Point
 {
     public int x, y;
@@ -15,158 +16,67 @@ public struct Point
 
 public class Field : MonoBehaviour
 {
-    public GameObject init_tile;
+    const int FIELD_SIZE = 5;
+    const float FIELD_TILES_SHIFT_FACTOR = 1.1F;
 
-    public GameObject moves_panel_player_1, moves_panel_player_2;
+    // Players' moves panels from which we will receive move tiles.
+    public MovesPanel moves_panel_player_1, moves_panel_player_2;
 
-    GameObject[,] field;
+    public GameObject init_field_tile_object;
+    FieldTile[,] field;
 
-    int size = 5;
-    float step_factor = 1.1F;
 
-    public void CreateTestDirections()
-    {
-        List<Move.Direction>[,] directions =
-        {
-            {
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.RIGHT, Move.Direction.FORWARD }),
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
-                new List<Move.Direction>(new Move.Direction[]{ })
-            },
-            {
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
-                new List<Move.Direction>(new Move.Direction[]{ }),
-                new List<Move.Direction>(new Move.Direction[]{ }),
-                new List<Move.Direction>(new Move.Direction[]{ }),
-                new List<Move.Direction>(new Move.Direction[]{ })
-            },
-            {
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.RIGHT, Move.Direction.FORWARD }),
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.LEFT, Move.Direction.FORWARD })
-            },
-            {
-                new List<Move.Direction>(new Move.Direction[]{ }),
-                new List<Move.Direction>(new Move.Direction[]{ }),
-                new List<Move.Direction>(new Move.Direction[]{ }),
-                new List<Move.Direction>(new Move.Direction[]{ }),
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD })
-            },
-            {
-                new List<Move.Direction>(new Move.Direction[]{ }),
-                new List<Move.Direction>(new Move.Direction[]{ }),
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
-                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.LEFT, Move.Direction.FORWARD })
-            }
-        };
-
-        for (int y = 0; y < size; y++)
-        {
-            for (int x = 0; x < size; x++)
-            {
-                foreach (Move.Direction direction in directions[y, x])
-                {
-                    field[y, x].GetComponent<FieldTile>().AddDirection(direction);
-                }
-            }
-        }
-    }
-
-    public void CreateTilesTypes(FieldTile.Type[,] tiles_types)
-    {
-        for (int y = 0; y < size; y++)
-        {
-            for (int x = 0; x < size; x++)
-            {
-                FieldTile tile = field[y, x].GetComponent<FieldTile>();
-                tile.type = tiles_types[y, x];
-                tile.ClearDirections();
-                if (tile.type == FieldTile.Type.START)
-                {
-                    tile.AddDirection(Move.Direction.FORWARD);
-                }
-                tile.robot.GetComponent<Robot>().type = Robot.Type.EMPTY;
-            }
-        }
-    }
-
-    public void ClearRobotRoute()
-    {
-        for (int y = 0; y < size; y++)
-        {
-            for (int x = 0; x < size; x++)
-            {
-                FieldTile tile = field[y, x].GetComponent<FieldTile>();
-                tile.robot.GetComponent<Robot>().type = Robot.Type.EMPTY;
-            }
-        }
-    }
-
-    public void CreateField()
-    {
-        Vector3 left_top_coords = transform.position;
-        field = new GameObject[size, size];
-
-        for (int y = 0; y < size; y++)
-        {
-            for (int x = 0; x < size; x++)
-            {
-                Vector3 coords = new Vector3(left_top_coords.x + x * step_factor, left_top_coords.y - y * step_factor, left_top_coords.z);
-                field[y, x] = Instantiate(init_tile, coords, new Quaternion());
-
-                field[y, x].GetComponent<FieldTileClick>().parent = this.gameObject;
-                field[y, x].GetComponent<FieldTileClick>().parent_point = new Point(x, y);
-            }
-        }
-    }
-
+    // Click from the ExchangerTile at the 'point' coordinates.
     public void ClickByPoint(Point point)
     {
-        int x = point.x;
-        int y = point.y;
-        FieldTile tile = field[y, x].GetComponent<FieldTile>();
-        MovesPanel moves_panel;
+        FieldTile field_tile = field[point.y, point.x];
 
-        switch (tile.type)
+        // Find out which player interacts with the field.
+        MovesPanel moves_panel;
+        switch (field_tile.type)
         {
             case FieldTile.Type.PLAYER1:
-                moves_panel = moves_panel_player_1.GetComponent<MovesPanel>();
+                moves_panel = moves_panel_player_1;
                 break;
             case FieldTile.Type.PLAYER2:
-                moves_panel = moves_panel_player_2.GetComponent<MovesPanel>();
+                moves_panel = moves_panel_player_2;
                 break;
             default:
                 return;
         }
 
-        Move.Direction active_direction = moves_panel.TakeActiveMoveTile();
-        if (active_direction == Move.Direction.DELETE)
+        // Find out which tile we try to put in the exchanger.
+        Move.Direction new_direction = moves_panel.TakeActiveMoveTile();
+        switch (new_direction)
         {
-            Move.Direction returned_direction = field[y, x].GetComponent<FieldTile>().DeleteDirection();
-            if (returned_direction != Move.Direction.NO_DIRECTION)
-            {
-                moves_panel.ReturnMoveTile(returned_direction);
-            }
-
-        }
-        else if (active_direction != Move.Direction.NO_DIRECTION)
-        {
-            field[y, x].GetComponent<FieldTile>().AddDirection(active_direction);
+            case Move.Direction.NO_DIRECTION:
+                // If we don't have any tile selected, click does not work.
+                return;
+            case Move.Direction.DELETE:
+                // Return tile back to the panel if any.
+                Move.Direction returned_direction = field_tile.DeleteDirection();
+                if (returned_direction != Move.Direction.NO_DIRECTION)
+                {
+                    moves_panel.ReturnMoveTile(returned_direction);
+                }
+                break;
+            default:
+                // Add move tile to the field tile.
+                field_tile.AddDirection(new_direction);
+                break;
         }
     }
 
+
+
+    // Find position of the start tile to start the robot.
     Point FindStartTile()
     {
-        for (int y = 0; y < size; y++)
+        for (int y = 0; y < FIELD_SIZE; y++)
         {
-            for (int x = 0; x < size; x++)
+            for (int x = 0; x < FIELD_SIZE; x++)
             {
-                if (field[y, x].GetComponent<FieldTile>().type == FieldTile.Type.START)
+                if (field[y, x].type == FieldTile.Type.START)
                 {
                     return new Point(x, y);
                 }
@@ -175,30 +85,42 @@ public class Field : MonoBehaviour
         throw new System.Exception("No start tile");
     }
 
+    // Check whether all win conditions are fulfilled:
+    // - Robot stopped in the end tile.
+    // - There are no available tiles in the players' moves panels.
     public bool CheckWinningCondition()
     {
         Point point = FindStartTile();
-        Robot robot = field[point.y, point.x].GetComponent<FieldTile>().robot.GetComponent<Robot>();
+        Robot robot = field[point.y, point.x].robot.GetComponent<Robot>();
 
-        bool[,] visited = new bool[size, size];
+        // We do not allow to go through the same tile twice thus 
+        // we mark tiles which have been visited.
+        bool[,] visited = new bool[FIELD_SIZE, FIELD_SIZE];
         while (!visited[point.y, point.x])
         {
             visited[point.y, point.x] = true;
 
-            FieldTile tile = field[point.y, point.x].GetComponent<FieldTile>();
-            if (tile.type == FieldTile.Type.EMPTY) return false;
+            FieldTile field_tile = field[point.y, point.x];
 
-            robot = tile.MoveRobotThrough(robot.direction);
+            // If we came to an obstacle, win conditions are not met.
+            if (field_tile.type == FieldTile.Type.EMPTY) return false;
+
+            // Find robot position after executing movements on this tile.
+            robot = field_tile.MoveRobotThrough(robot.direction);
             if (robot.type == Robot.Type.STOP)
             {
-                if (tile.type == FieldTile.Type.END
-                        && moves_panel_player_1.GetComponent<MovesPanel>().NumberAvailableMoves() == 0
-                        && moves_panel_player_2.GetComponent<MovesPanel>().NumberAvailableMoves() == 0) 
+                // If destinations is END tile and both players do not have 
+                // available tiles in the moves panel, we win.
+                if (field_tile.type == FieldTile.Type.END
+                        && moves_panel_player_1.NumberAvailableMoves() == 0
+                        && moves_panel_player_2.NumberAvailableMoves() == 0) 
                 { 
                     return true; 
                 }
+                // Otherwise we stopped in a wrong place or did not use all tiles.
                 return false;
             }
+            // Find the next tile coordinates for the robot.
             if (robot.type == Robot.Type.MOVE)
             {
                 switch (robot.direction)
@@ -218,20 +140,88 @@ public class Field : MonoBehaviour
                 }
             }
 
-            if (point.x < 0 || point.x >= size || point.y < 0 || point.y >= size) return false;
+            // If we try to leave the field, win conditions are not met.
+            if (point.x < 0 || point.x >= FIELD_SIZE || point.y < 0 || point.y >= FIELD_SIZE) return false;
         }
         return false;
     }
 
-    // Start is called before the first frame update
+    // Clear robot footprints left on the field.
+    public void ClearRobotRoute()
+    {
+        for (int y = 0; y < FIELD_SIZE; y++)
+        {
+            for (int x = 0; x < FIELD_SIZE; x++)
+            {
+                FieldTile tile = field[y, x];
+                tile.robot.GetComponent<Robot>().type = Robot.Type.EMPTY;
+            }
+        }
+    }
+
+
+
+
+    // Create / Update operations.
+    public void CreateTilesTypes(FieldTile.Type[,] tiles_types)
+    {
+        for (int y = 0; y < FIELD_SIZE; y++)
+        {
+            for (int x = 0; x < FIELD_SIZE; x++)
+            {
+                FieldTile tile = field[y, x];
+                tile.type = tiles_types[y, x];
+                tile.ClearDirections();
+                // Start tile always has one FORWARD tile.
+                if (tile.type == FieldTile.Type.START)
+                {
+                    tile.AddDirection(Move.Direction.FORWARD);
+                }
+                tile.robot.GetComponent<Robot>().type = Robot.Type.EMPTY;
+            }
+        }
+    }
+
+    public void CreateField()
+    {
+        Vector3 left_top_coords = transform.position;
+        field = new FieldTile[FIELD_SIZE, FIELD_SIZE];
+
+        for (int y = 0; y < FIELD_SIZE; y++)
+        {
+            for (int x = 0; x < FIELD_SIZE; x++)
+            {
+                Vector3 coords = new Vector3(left_top_coords.x + x * FIELD_TILES_SHIFT_FACTOR, left_top_coords.y - y * FIELD_TILES_SHIFT_FACTOR, left_top_coords.z);
+                field[y, x] = Instantiate(init_field_tile_object, coords, new Quaternion()).GetComponent<FieldTile>();
+
+                field[y, x].GetComponent<FieldTileClick>().parent = this.gameObject;
+                field[y, x].GetComponent<FieldTileClick>().parent_point = new Point(x, y);
+            }
+        }
+    }
+
+    public void UpdateDirections(List<Move.Direction>[,] directions)
+    {
+        for (int y = 0; y < FIELD_SIZE; y++)
+        {
+            for (int x = 0; x < FIELD_SIZE; x++)
+            {
+                FieldTile tile = field[y, x];
+                tile.ClearDirections();
+                if (tile.type == FieldTile.Type.START)
+                {
+                    tile.AddDirection(Move.Direction.FORWARD);
+                }
+                foreach (Move.Direction direction in directions[y, x])
+                {
+                    field[y, x].AddDirection(direction);
+                }
+            }
+        }
+    }
+
     void Start()
     {
         //CreateField();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -5,8 +5,8 @@ using UnityEngine;
 public class MoveWithCounter : MonoBehaviour
 {
     const int MAX_POSSIBLE_COUNTERS_NUMBER = 15;
-    const float COUNTER_SHIFT_FACTOR = 0.5F;
-    const float COUNTER_SHIFT = 1;
+    const float COUNTERS_SHIFT_FACTOR = 0.5F;
+    const float COUNTERS_SHIFT = 1;
 
     public MoveTile.Type move_type;
 
@@ -37,7 +37,7 @@ public class MoveWithCounter : MonoBehaviour
     void CreateMoveWithCounter(int x, Counter.Type counter_type)
     {
         Vector3 left_top_coords = transform.position;
-        float shift = COUNTER_SHIFT + x * COUNTER_SHIFT_FACTOR; 
+        float shift = COUNTERS_SHIFT + x * COUNTERS_SHIFT_FACTOR; 
         if (!are_counters_on_the_right) shift *= -1;
         Vector3 coords = new Vector3(left_top_coords.x + shift, left_top_coords.y, left_top_coords.z);
         counter_panel[x] = Instantiate(init_counter_object, coords, new Quaternion()).GetComponent<Counter>();

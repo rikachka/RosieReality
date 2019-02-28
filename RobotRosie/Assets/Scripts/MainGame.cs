@@ -48,6 +48,7 @@ public class MainGame : MonoBehaviour
                 }
                 break;
             case State.CHECK:
+                GUI.Box(location_box, "");
                 if (GUI.Button(location_button, "Continue"))
                 {
                     field.GetComponent<Field>().ClearRobotRoute();
@@ -116,7 +117,46 @@ public class MainGame : MonoBehaviour
         };
         field.GetComponent<Field>().CreateTilesTypes(tiles_types);
 
-        field.GetComponent<Field>().CreateTestDirections();
+
+        List<Move.Direction>[,] directions =
+        {
+            {
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.RIGHT, Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ })
+            },
+            {
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ })
+            },
+            {
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.RIGHT, Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.LEFT, Move.Direction.FORWARD })
+            },
+            {
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD })
+            },
+            {
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.FORWARD }),
+                new List<Move.Direction>(new Move.Direction[]{ Move.Direction.LEFT, Move.Direction.FORWARD })
+            }
+        };
+        field.GetComponent<Field>().UpdateDirections(directions);
     }
 
     // Start is called before the first frame update

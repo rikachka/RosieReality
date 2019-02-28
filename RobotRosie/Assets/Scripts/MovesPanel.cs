@@ -5,8 +5,8 @@ using UnityEngine;
 public class MovesPanel : MonoBehaviour
 {
     const int NO_ACTIVE_MOVE_IN_PANEL = -1;
-    const float MOVES_IN_PANEL_SHIFT_FACTOR = 1.1F;
-    const int MOVES_IN_PANEL_NUMBER = 4;
+    const float MOVE_TILES_SHIFT_FACTOR = 1.1F;
+    const int MOVES_PANEL_SIZE = 4;
 
     public struct MoveWithCounterInfo
     {
@@ -28,7 +28,7 @@ public class MovesPanel : MonoBehaviour
     public bool are_counters_on_the_right;
 
     public GameObject init_move_with_counter_object;
-    MoveWithCounter[] panel;
+    MoveWithCounter[] moves_panel;
 
     // One of the tiles in the panel can be active. This tile will be used 
     // in the field or in the exchanger if we click there.
@@ -39,7 +39,7 @@ public class MovesPanel : MonoBehaviour
     // Click from the MoveWithCounter at the index 'y'.
     public void ClickByIndex(int y)
     {
-        MoveWithCounter move_tile_clicked = panel[y];
+        MoveWithCounter move_tile_clicked = moves_panel[y];
 
         // If there are no available move tiles, click does not work.
         // DELETE tile is special, it brings tiles back to the panel, thus it does not need counters. 
@@ -54,7 +54,7 @@ public class MovesPanel : MonoBehaviour
         }
 
         // If there was active tile, remove selection from it.
-        MoveWithCounter move_tile_active = panel[active_in_panel];
+        MoveWithCounter move_tile_active = moves_panel[active_in_panel];
         if (move_tile_active.GetDirection() == Move.Direction.DELETE)
         {
             move_tile_active.move_type = MoveTile.Type.DELETE;
@@ -84,7 +84,7 @@ public class MovesPanel : MonoBehaviour
     {
         if (active_in_panel != NO_ACTIVE_MOVE_IN_PANEL)
         {
-            MoveWithCounter move_with_counter_active = panel[active_in_panel];
+            MoveWithCounter move_with_counter_active = moves_panel[active_in_panel];
             Move.Direction move_direction = move_with_counter_active.GetDirection();
 
             if (move_direction != Move.Direction.DELETE)
@@ -107,7 +107,7 @@ public class MovesPanel : MonoBehaviour
     // The move tile is returned to the panel. It is added back to the available in panel number.
     public void ReturnMoveTile(Move.Direction returned_direction)
     {
-        foreach (MoveWithCounter move_with_counter in panel)
+        foreach (MoveWithCounter move_with_counter in moves_panel)
         {
             if (move_with_counter.GetDirection() == returned_direction)
             {
@@ -120,7 +120,7 @@ public class MovesPanel : MonoBehaviour
     // The number of corresponding tiles increased / decreased (not only in the panel, but in total).
     public void ExchangeMoveTile(Move.Direction received_direction, Move.Direction given_direction)
     {
-        foreach (MoveWithCounter move_with_counter in panel)
+        foreach (MoveWithCounter move_with_counter in moves_panel)
         {
             if (move_with_counter.GetDirection() == received_direction)
             {
@@ -141,7 +141,7 @@ public class MovesPanel : MonoBehaviour
     public int NumberAvailableMoves()
     {
         int number_available_moves = 0;
-        foreach (MoveWithCounter move_with_counter in panel)
+        foreach (MoveWithCounter move_with_counter in moves_panel)
         {
             number_available_moves += move_with_counter.available_number;
         }
@@ -149,10 +149,35 @@ public class MovesPanel : MonoBehaviour
     }
 
 
+
     // Create / Update operations.
+    void CreateMoveTile(int y)
+    {
+        Vector3 left_top_coords = transform.position;
+        Vector3 coords = new Vector3(left_top_coords.x, left_top_coords.y - y * MOVE_TILES_SHIFT_FACTOR, left_top_coords.z);
+        moves_panel[y] = Instantiate(init_move_with_counter_object, coords, new Quaternion()).GetComponent<MoveWithCounter>();
+
+        MoveWithCounter move_with_counter = moves_panel[y];
+        move_with_counter.are_counters_on_the_right = are_counters_on_the_right;
+
+        move_with_counter.move_tile.GetComponent<MoveTileClick>().parent = this.gameObject;
+        move_with_counter.move_tile.GetComponent<MoveTileClick>().parent_index = y;
+    }
+
+    public void CreateMovesPanel()
+    {
+        moves_panel = new MoveWithCounter[MOVES_PANEL_SIZE];
+
+        for (int y = 0; y < MOVES_PANEL_SIZE; y++)
+        {
+            CreateMoveTile(y);
+        }
+    }
+
+
     void UpdateMoveTile(int y, MoveWithCounterInfo move_tile_info, MoveTile.Type move_tile_type)
     {
-        MoveWithCounter move_with_counter = panel[y];
+        MoveWithCounter move_with_counter = moves_panel[y];
         move_with_counter.move_type = move_tile_type;
         move_with_counter.are_counters_on_the_right = are_counters_on_the_right;
         move_with_counter.SetDirection(move_tile_info.move_direction);
@@ -170,30 +195,6 @@ public class MovesPanel : MonoBehaviour
         }
 
         UpdateMoveTile(moves_types_number, new MoveWithCounterInfo(Move.Direction.DELETE, 0, 0), MoveTile.Type.DELETE);
-    }
-
-
-    void CreateMoveTile(int y)
-    {
-        Vector3 left_top_coords = transform.position;
-        Vector3 coords = new Vector3(left_top_coords.x, left_top_coords.y - y * MOVES_IN_PANEL_SHIFT_FACTOR, left_top_coords.z);
-        panel[y] = Instantiate(init_move_with_counter_object, coords, new Quaternion()).GetComponent<MoveWithCounter>();
-
-        MoveWithCounter move_with_counter = panel[y];
-        move_with_counter.are_counters_on_the_right = are_counters_on_the_right;
-
-        move_with_counter.move_tile.GetComponent<MoveTileClick>().parent = this.gameObject;
-        move_with_counter.move_tile.GetComponent<MoveTileClick>().parent_index = y;
-    }
-
-    public void CreateMovesPanel()
-    {
-        panel = new MoveWithCounter[MOVES_IN_PANEL_NUMBER];
-
-        for (int y = 0; y < MOVES_IN_PANEL_NUMBER; y++)
-        {
-            CreateMoveTile(y);
-        }
     }
 
     void Start()

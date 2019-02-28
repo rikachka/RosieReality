@@ -577,12 +577,12 @@ PrefabInstance:
         type: 3}
       propertyPath: moves_panel_player_1
       value: 
-      objectReference: {fileID: 1774130052}
+      objectReference: {fileID: 1774130053}
     - target: {fileID: 4405635551683304317, guid: b437642cb292e4282b391c394be80628,
         type: 3}
       propertyPath: moves_panel_player_2
       value: 
-      objectReference: {fileID: 2035313113}
+      objectReference: {fileID: 2035313114}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b437642cb292e4282b391c394be80628, type: 3}
 --- !u!1 &2035313113 stripped
