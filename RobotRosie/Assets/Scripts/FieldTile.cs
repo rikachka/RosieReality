@@ -87,16 +87,22 @@ public class FieldTile : MonoBehaviour
         if (type == Type.START) robot.type = Robot.Type.MOVE;
 
         // Color tile due to it's type: start, end, obstacle, belonging to a player.
-        GetComponent<SpriteRenderer>().sprite = imgs_types[(int)type];
+        if ((int)type < imgs_types.Length)
+        {
+            GetComponent<SpriteRenderer>().sprite = imgs_types[(int)type];
+        }
 
         // Show the last movement attached to the tile if any.
-        if (directions.Count <= 0)
+        if (last_move != null)
         {
-            last_move.direction = Move.Direction.NO_DIRECTION;
-        }
-        else
-        {
-            last_move.direction = directions[directions.Count - 1];
+            if (directions.Count <= 0)
+            {
+                last_move.direction = Move.Direction.NO_DIRECTION;
+            }
+            else
+            {
+                last_move.direction = directions[directions.Count - 1];
+            }
         }
     }
 

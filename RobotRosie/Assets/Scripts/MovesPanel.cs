@@ -30,42 +30,51 @@ public class MovesPanel : MonoBehaviour
 
     float step_factor = 1.1F;
 
-    void CreateMoveTile(int y, MoveInfo move_tile_info, MoveTile.Type move_tile_type) 
+    int size = 4;
+
+    void CreateMoveTile(int y)
     {
         Vector3 left_top_coords = transform.position;
         Vector3 coords = new Vector3(left_top_coords.x, left_top_coords.y - y * step_factor, left_top_coords.z);
         panel[y] = Instantiate(init_move_with_counter, coords, new Quaternion());
 
         MoveWithCounter move_with_counter = panel[y].GetComponent<MoveWithCounter>();
+        move_with_counter.are_counters_on_the_right = are_counters_on_the_right;
+
+        move_with_counter.move_tile.GetComponent<MoveTileClick>().parent = this.gameObject;
+        move_with_counter.move_tile.GetComponent<MoveTileClick>().parent_index = y;
+    }
+
+    public void CreateMovesPanel()
+    {
+        panel = new GameObject[size];
+
+        for (int y = 0; y < size; y++)
+        {
+            CreateMoveTile(y);
+        }
+    }
+
+    void UpdateMoveTile(int y, MoveInfo move_tile_info, MoveTile.Type move_tile_type)
+    {
+        MoveWithCounter move_with_counter = panel[y].GetComponent<MoveWithCounter>();
         move_with_counter.move_type = move_tile_type;
         move_with_counter.are_counters_on_the_right = are_counters_on_the_right;
         move_with_counter.move_direction = move_tile_info.move_direction;
         move_with_counter.number_max = move_tile_info.number_max;
         move_with_counter.number_available = move_tile_info.number_available;
-
-        move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().parent = this.gameObject;
-        move_with_counter.GetMoveTile().GetComponent<MoveTileClick>().parent_index = y;
     }
 
-    public void CreateMovesPanel(MoveInfo[] moves_info)
+    public void UpdateMovesPanel(MoveInfo[] moves_info)
     {
-        ClearMovesPanel();
         int moves_types_number = moves_info.Length;
-        panel = new GameObject[moves_types_number + 1];
 
         for (int y = 0; y < moves_types_number; y++)
         {
-            CreateMoveTile(y, moves_info[y], default_move_tile_type);
+            UpdateMoveTile(y, moves_info[y], default_move_tile_type);
         }
-        CreateMoveTile(moves_types_number, new MoveInfo(Move.Direction.DELETE, 0, 0), MoveTile.Type.DELETE);
-    }
 
-    public void ClearMovesPanel()
-    {
-        foreach (GameObject panel_elem in panel)
-        {
-            Destroy(panel_elem);
-        }
+        UpdateMoveTile(moves_types_number, new MoveInfo(Move.Direction.DELETE, 0, 0), MoveTile.Type.DELETE);
     }
 
     public void Click(int y)
@@ -168,13 +177,11 @@ public class MovesPanel : MonoBehaviour
         return number_available_moves;
     }
 
-    // Start is called before the first frame update
-        void Start()
+    void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
 

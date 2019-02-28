@@ -49,7 +49,7 @@ MonoBehaviour:
   number_max: 0
   number_available: 0
   are_counters_on_the_right: 0
-  move_tile: {fileID: 0}
+  move_tile: {fileID: 2384951954265842509}
   init_counter: {fileID: 256941451250121659, guid: 8ba399f9cdfe54f5080bacc647e1ce39,
     type: 3}
 --- !u!1001 &8884526312556994908
@@ -127,3 +127,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8884526312556994908}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2384951954265842509 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6509144782926873105, guid: ca3c5d60bd7454309b7a5a2b773c1b53,
+    type: 3}
+  m_PrefabInstance: {fileID: 8884526312556994908}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2233c20d6d284105889ddb92fc68f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

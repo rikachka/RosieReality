@@ -16,19 +16,17 @@ public class Counter : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().sprite = null;
         }
-        else if (imgs.Length > (int)img_type)
+        else 
         {
             GetComponent<SpriteRenderer>().sprite = imgs[(int)img_type];
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         ChangeImg();
     }
 
-    // Update is called once per frame
     void Update()
     {
         ChangeImg();
