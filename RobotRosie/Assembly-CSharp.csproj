@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\ExchangerTileClick.cs" />
     <Compile Include="Assets\Scripts\Field.cs" />
     <Compile Include="Assets\Scripts\MainGame.cs" />
+    <Compile Include="Assets\Scripts\Move.cs" />
     <Compile Include="Assets\Scripts\MovesPanel.cs" />
     <Compile Include="Assets\Scripts\MoveTile.cs" />
     <Compile Include="Assets\Scripts\MoveTileClick.cs" />

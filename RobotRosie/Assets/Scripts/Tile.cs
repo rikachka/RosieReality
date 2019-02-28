@@ -11,9 +11,11 @@ public class Tile : MonoBehaviour
 
     public Type type = 0;
 
-    GameObject last_direction_tile;
     public GameObject robot;
 
+    // Object showing the last movement attached to the tile.
+    public GameObject last_direction_tile;
+    // Container of movements attached to the tile.
     List<MoveTile.Direction> directions = new List<MoveTile.Direction>();
 
     public void AddDirection(MoveTile.Direction direction)
@@ -29,7 +31,10 @@ public class Tile : MonoBehaviour
             directions.RemoveAt(directions.Count - 1);
             return direction;
         }
-        return MoveTile.Direction.NO_DIRECTION;
+        else
+        {
+            return MoveTile.Direction.NO_DIRECTION;
+        }
     }
 
     public void ClearDirections()
@@ -64,36 +69,32 @@ public class Tile : MonoBehaviour
 
     void ChangeImg()
     {
+        // Always show robot direction on the start tile.
         if (type == Type.START)
         {
             robot.GetComponent<Robot>().type = Robot.Type.MOVE;
         }
 
-        if (imgs_types.Length > (int)type)
-        {
-            GetComponent<SpriteRenderer>().sprite = imgs_types[(int)type];
-        }
+        // Color tile due to it's type: start, end, obstacle, belonging to a player.
+        GetComponent<SpriteRenderer>().sprite = imgs_types[(int)type];
 
+        // Show the last movement attached to the tile if any.
         if (directions.Count <= 0)
         {
-            last_direction_tile.GetComponent<SpriteRenderer>().sprite = null;
+            last_direction_tile.GetComponent<Move>().direction = Move.Direction.NO_DIRECTION;
         }
         else
         {
             MoveTile.Direction last_direction = directions[directions.Count - 1];
-            last_direction_tile.GetComponent<SpriteRenderer>().sprite = imgs_directions[(int)last_direction];
+            last_direction_tile.GetComponent<Move>().direction = (Move.Direction)last_direction;
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        last_direction_tile = transform.Find("LastDirection").gameObject;
-
         ChangeImg();
     }
 
-    // Update is called once per frame
     void Update()
     {
         ChangeImg();

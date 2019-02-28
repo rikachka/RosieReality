@@ -22,7 +22,7 @@ public class Exchanger : MonoBehaviour
         exchanger_tile.type = exchanger_tile_type;
 
         exchanger_tile.GetComponent<ExchangerTileClick>().parent = this.gameObject;
-        exchanger_tile.GetComponent<ExchangerTileClick>().index = x;
+        exchanger_tile.GetComponent<ExchangerTileClick>().parent_index = x;
     }
 
     public void CreateExchanger()
