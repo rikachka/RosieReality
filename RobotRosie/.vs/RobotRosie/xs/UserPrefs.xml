@@ -1,16 +1,18 @@
 ﻿<Properties StartupConfiguration="{239BBA5D-E66C-1961-1799-1C216ECA8E00}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Robot.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ExchangerTile.cs">
     <Files>
-      <File FileName="Assets/Scripts/MainGame.cs" Line="32" Column="14" />
-      <File FileName="Assets/Scripts/Field.cs" Line="14" Column="30" />
-      <File FileName="Assets/Scripts/MoveTile.cs" Line="8" Column="56" />
-      <File FileName="Assets/Scripts/MovesPanel.cs" Line="53" Column="27" />
-      <File FileName="Assets/Scripts/Tile.cs" Line="41" Column="9" />
-      <File FileName="Assets/Scripts/MoveWithCounter.cs" Line="82" Column="5" />
+      <File FileName="Assets/Scripts/MainGame.cs" Line="116" Column="102" />
+      <File FileName="Assets/Scripts/Field.cs" Line="189" Column="13" />
+      <File FileName="Assets/Scripts/MoveTile.cs" Line="6" Column="2" />
+      <File FileName="Assets/Scripts/MovesPanel.cs" Line="137" Column="28" />
+      <File FileName="Assets/Scripts/Tile.cs" Line="91" Column="74" />
+      <File FileName="Assets/Scripts/MoveWithCounter.cs" Line="14" Column="30" />
       <File FileName="Assets/Scripts/MoveTileClick.cs" Line="22" Column="29" />
       <File FileName="Assets/Scripts/TileClick.cs" Line="3" Column="19" />
       <File FileName="Assets/Scripts/Counter.cs" Line="17" Column="59" />
-      <File FileName="Assets/Scripts/Robot.cs" Line="7" Column="5" />
+      <File FileName="Assets/Scripts/Robot.cs" Line="21" Column="26" />
+      <File FileName="Assets/Scripts/ExchangerTile.cs" Line="8" Column="71" />
+      <File FileName="Assets/Scripts/Exchanger.cs" Line="6" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -15,21 +15,19 @@ public class MainGame : MonoBehaviour
         float screen_centre_x = Screen.width / 2;
         float screen_centre_y = Screen.height / 2;
 
-        Rect location_button;
+        Rect location_button = new Rect(new Vector2(screen_centre_x - 100, 10), new Vector2(200, 30));
+        Rect location_box = new Rect(new Vector2(10, 10), new Vector2(Screen.width - 20, Screen.height - 20));
+        Rect location_label = new Rect(new Vector2(screen_centre_x - 110, screen_centre_y - 30), new Vector2(220, 30));
 
         switch (state) {
             case State.WIN:
-                location_button = new Rect(new Vector2(10, 10), new Vector2(Screen.width - 20, Screen.height - 20));
-                GUI.Box(location_button, "");
+                GUI.Box(location_box, "");
 
-                location_button = new Rect(new Vector2(screen_centre_x - 100, screen_centre_y - 15), new Vector2(200, 30));
                 GUIStyle gui_style = new GUIStyle();
                 gui_style.fontSize = 30;
                 gui_style.normal.textColor = Color.white;
-                GUI.Label(location_button, "Congratulations!", gui_style);
+                GUI.Label(location_label, "Congratulations!", gui_style);
 
-
-                location_button = new Rect(new Vector2(screen_centre_x - 93, 10), new Vector2(200, 30));
                 if (GUI.Button(location_button, "New game"))
                 {
                     CreateNewGame();
@@ -37,7 +35,6 @@ public class MainGame : MonoBehaviour
                 }
                 break;
             case State.GAME:
-                location_button = new Rect(new Vector2(screen_centre_x - 93, 10), new Vector2(200, 30));
                 if (GUI.Button(location_button, "Check"))
                 {
                     if (field.GetComponent<Field>().CheckWinningCondition())
@@ -51,7 +48,6 @@ public class MainGame : MonoBehaviour
                 }
                 break;
             case State.CHECK:
-                location_button = new Rect(new Vector2(screen_centre_x - 93, 10), new Vector2(200, 30));
                 if (GUI.Button(location_button, "Continue"))
                 {
                     field.GetComponent<Field>().ClearRobotRoute();
@@ -113,7 +109,7 @@ public class MainGame : MonoBehaviour
         Tile.Type[,] tiles_types =
         {
             { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.END },
-            { Tile.Type.PLAYER1, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY },
+            { Tile.Type.PLAYER1, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.PLAYER1 },
             { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1, Tile.Type.PLAYER2 },
             { Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.PLAYER1 },
             { Tile.Type.EMPTY, Tile.Type.START, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1 },
@@ -127,8 +123,8 @@ public class MainGame : MonoBehaviour
     void Start()
     {
         field.GetComponent<Field>().CreateField();
-        CreateNewGame();
-        //CreateSolvedGame();
+        //CreateNewGame();
+        CreateSolvedGame();
     }
 
     // Update is called once per frame

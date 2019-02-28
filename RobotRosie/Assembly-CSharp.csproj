@@ -61,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Counter.cs" />
+    <Compile Include="Assets\Scripts\Exchanger.cs" />
+    <Compile Include="Assets\Scripts\ExchangerTile.cs" />
     <Compile Include="Assets\Scripts\Field.cs" />
     <Compile Include="Assets\Scripts\MainGame.cs" />
     <Compile Include="Assets\Scripts\MovesPanel.cs" />
