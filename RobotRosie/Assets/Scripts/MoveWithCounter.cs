@@ -33,6 +33,7 @@ public class MoveWithCounter : MonoBehaviour
     }
 
 
+    // Create / Update operations.
     void CreateMoveWithCounter(int x, Counter.Type counter_type)
     {
         Vector3 left_top_coords = transform.position;
