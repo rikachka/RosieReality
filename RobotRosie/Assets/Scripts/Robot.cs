@@ -4,23 +4,42 @@ using UnityEngine;
 
 public class Robot : MonoBehaviour
 {
+    public enum Type { EMPTY, MOVE, STOP }
     public enum Direction { RIGHT, UP, LEFT, DOWN }
 
+    public Sprite[] imgs_types;
     public Sprite[] imgs_directions;
 
+    public Type type = Type.EMPTY;
     public Direction direction;
 
-    public bool is_shown = false;
+    public void FindDirection(Direction prev_direction, int direction_change)
+    {
+        int directions_number = System.Enum.GetNames(typeof(Type)).Length;
+        int new_direction = (int)prev_direction + direction_change;
+        direction = (Direction)(new_direction % directions_number);
+        type = Type.MOVE;
+    }
 
     void ChangeImg()
     {
-        if (!is_shown)
+        switch (type)
         {
-            GetComponent<SpriteRenderer>().sprite = null;
-        }
-        else if (imgs_directions.Length > (int)direction)
-        {
-            GetComponent<SpriteRenderer>().sprite = imgs_directions[(int)direction];
+            case Type.MOVE:
+                if (imgs_directions.Length > (int)direction)
+                {
+                    GetComponent<SpriteRenderer>().sprite = imgs_directions[(int)direction];
+                }
+                break;
+            case Type.STOP:
+                if (imgs_directions.Length > (int)direction)
+                {
+                    GetComponent<SpriteRenderer>().sprite = imgs_types[(int)type];
+                }
+                break;
+            default:
+                GetComponent<SpriteRenderer>().sprite = null;
+                break;
         }
     }
 

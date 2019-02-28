@@ -9,12 +9,12 @@ public class Tile : MonoBehaviour
     public Sprite[] imgs_types;
     public Sprite[] imgs_directions;
 
-    public Type img_type = 0;
+    public Type type = 0;
 
-    public bool is_robot_shown = false;
+    public Robot.Type robot_type = Robot.Type.EMPTY;
 
     GameObject last_direction_tile; 
-    Robot robot;
+    public Robot robot;
 
     List<MoveTile.Direction> directions = new List<MoveTile.Direction>();
 
@@ -39,7 +39,7 @@ public class Tile : MonoBehaviour
         directions = new List<MoveTile.Direction>();
     }
 
-    public int MoveRobotThrough()
+    public Robot MoveRobotThrough(Robot.Direction prev_direction)
     {
         int direction_change = 0;
         foreach (MoveTile.Direction direction in directions)
@@ -53,21 +53,24 @@ public class Tile : MonoBehaviour
                     direction_change--;
                     break;
                 case MoveTile.Direction.FORWARD:
-                    return direction_change;
+                    robot.FindDirection(prev_direction, direction_change);
+                    return robot;
                 default:
-                    return -1;
+                    robot.type = Robot.Type.STOP;
+                    break;
             }
         }
-        return -1;
+        robot.type = Robot.Type.STOP;
+        return robot;
     }
 
     void ChangeImg()
     {
-        robot.is_shown = is_robot_shown;
+        robot.type = robot_type;
 
-        if (imgs_types.Length > (int)img_type)
+        if (imgs_types.Length > (int)type)
         {
-            GetComponent<SpriteRenderer>().sprite = imgs_types[(int)img_type];
+            GetComponent<SpriteRenderer>().sprite = imgs_types[(int)type];
         }
 
         if (directions.Count <= 0)
@@ -76,7 +79,6 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            //Debug.Log(directions.Count);
             MoveTile.Direction last_direction = directions[directions.Count - 1];
             last_direction_tile.GetComponent<SpriteRenderer>().sprite = imgs_directions[(int)last_direction];
         }

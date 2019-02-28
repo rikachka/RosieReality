@@ -84,12 +84,12 @@ public class Field : MonoBehaviour
             for (int x = 0; x < size; x++)
             {
                 Tile tile = field[y, x].GetComponent<Tile>();
-                tile.img_type = tiles_types[y, x];
+                tile.type = tiles_types[y, x];
                 tile.ClearDirections();
-                if (tile.img_type == Tile.Type.START)
+                if (tile.type == Tile.Type.START)
                 {
-                    //tile.ShowRobot();
-                    tile.is_robot_shown = true;
+                    tile.robot_type = Robot.Type.MOVE;
+                    tile.AddDirection(MoveTile.Direction.FORWARD);
                 }
             }
         }
@@ -119,7 +119,7 @@ public class Field : MonoBehaviour
         Tile tile = field[y, x].GetComponent<Tile>();
         MovesPanel moves_panel;
 
-        switch (tile.img_type)
+        switch (tile.type)
         {
             case Tile.Type.PLAYER1:
                 moves_panel = moves_panel_player_1.GetComponent<MovesPanel>();
@@ -153,7 +153,7 @@ public class Field : MonoBehaviour
         {
             for (int x = 0; x < size; x++)
             {
-                if (field[y, x].GetComponent<Tile>().img_type == Tile.Type.START)
+                if (field[y, x].GetComponent<Tile>().type == Tile.Type.START)
                 {
                     return new Point(x, y);
                 }
@@ -164,17 +164,49 @@ public class Field : MonoBehaviour
 
     public bool CheckWinningCondition()
     {
-        bool[,] visited = new bool[size, size];
-
         Point point = FindStartTile();
-        //RobotDirection direction = RobotDirection.RIGHT;
+        Robot robot = field[point.y, point.x].GetComponent<Tile>().robot;
 
+        bool[,] visited = new bool[size, size];
         while (!visited[point.y, point.x])
         {
+            Debug.Log("Point");
+            Debug.Log(point.x);
+            Debug.Log(point.y);
+            if (point.x < 0 || point.x >= size || point.y < 0 || point.y >= size) return false;
             visited[point.y, point.x] = true;
 
+            Tile tile = field[point.y, point.x].GetComponent<Tile>();
+            if (tile.type == Tile.Type.EMPTY) return false;
+
+            Debug.Log(robot.direction);
+            robot = tile.MoveRobotThrough(robot.direction);
+            Debug.Log(robot.direction);
+            if (robot.type == Robot.Type.STOP)
+            {
+                if (tile.type == Tile.Type.END) return true;
+                return false;
+            }
+            if (robot.type == Robot.Type.MOVE)
+            {
+                switch (robot.direction)
+                {
+                    case Robot.Direction.RIGHT:
+                        point.x += 1;
+                        break;
+                    case Robot.Direction.LEFT:
+                        point.x -= 1;
+                        break;
+                    case Robot.Direction.UP:
+                        point.y -= 1;
+                        break;
+                    case Robot.Direction.DOWN:
+                        point.y += 1;
+                        break;
+                }
+            }
         }
-        return true;
+        return false;
     }
 
     // Start is called before the first frame update
