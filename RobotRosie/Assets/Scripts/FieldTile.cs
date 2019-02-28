@@ -65,9 +65,10 @@ public class FieldTile : MonoBehaviour
                     direction_change--;
                     break;
                 case Move.Direction.FORWARD:
-                    // If we found forward direction, we calculate the position
-                    // of the robot on this tile and leave the tile.
+                    // If we found forward direction, we calculate the direction
+                    // of the robot's movement from this tile and leave the tile.
                     robot.FindDirection(prev_direction, direction_change);
+                    robot.type = Robot.Type.MOVE;
                     return robot;
                 default:
                     robot.type = Robot.Type.STOP;
