@@ -60,7 +60,7 @@ public class MovesPanel : MonoBehaviour
         MoveWithCounter move_with_counter = panel[y].GetComponent<MoveWithCounter>();
         move_with_counter.move_type = move_tile_type;
         move_with_counter.are_counters_on_the_right = are_counters_on_the_right;
-        move_with_counter.move_direction = move_tile_info.move_direction;
+        move_with_counter.SetDirection(move_tile_info.move_direction);
         move_with_counter.number_max = move_tile_info.number_max;
         move_with_counter.number_available = move_tile_info.number_available;
     }
@@ -81,7 +81,7 @@ public class MovesPanel : MonoBehaviour
     {
         MoveWithCounter move_tile_clicked = panel[y].GetComponent<MoveWithCounter>();
 
-        if (move_tile_clicked.number_available <= 0 && move_tile_clicked.move_direction != Move.Direction.DELETE)
+        if (move_tile_clicked.number_available <= 0 && move_tile_clicked.GetDirection() != Move.Direction.DELETE)
         {
             return;
         }
@@ -95,7 +95,7 @@ public class MovesPanel : MonoBehaviour
 
         MoveWithCounter move_tile_active = panel[active_in_panel].GetComponent<MoveWithCounter>();
 
-        if (move_tile_active.move_direction == Move.Direction.DELETE)
+        if (move_tile_active.GetDirection() == Move.Direction.DELETE)
         {
             move_tile_active.move_type = MoveTile.Type.DELETE;
         }
@@ -120,7 +120,7 @@ public class MovesPanel : MonoBehaviour
         if (active_in_panel != NO_ACTIVE)
         {
             MoveWithCounter move_with_counter = panel[active_in_panel].GetComponent<MoveWithCounter>();
-            Move.Direction move_direction = move_with_counter.move_direction;
+            Move.Direction move_direction = move_with_counter.GetDirection();
 
             if (move_direction != Move.Direction.DELETE)
             {
@@ -142,7 +142,7 @@ public class MovesPanel : MonoBehaviour
         foreach (GameObject panel_elem in panel)
         {
             MoveWithCounter move_with_counter = panel_elem.GetComponent<MoveWithCounter>();
-            if (move_with_counter.move_direction == returned_direction)
+            if (move_with_counter.GetDirection() == returned_direction)
             {
                 move_with_counter.number_available++;
                 return;
@@ -155,12 +155,12 @@ public class MovesPanel : MonoBehaviour
         foreach (GameObject panel_elem in panel)
         {
             MoveWithCounter move_with_counter = panel_elem.GetComponent<MoveWithCounter>();
-            if (move_with_counter.move_direction == received_direction)
+            if (move_with_counter.GetDirection() == received_direction)
             {
                 move_with_counter.number_available++;
                 move_with_counter.number_max++;
             }
-            if (move_with_counter.move_direction == given_direction)
+            if (move_with_counter.GetDirection() == given_direction)
             {
                 move_with_counter.number_max--;
             }

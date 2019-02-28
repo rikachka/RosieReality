@@ -12,6 +12,11 @@ public class MoveTile : MonoBehaviour
 
     public Type type;
 
+    public Move.Direction GetDirection()
+    {
+        return move.direction;
+    }
+
     public void SetDirection(Move.Direction direction)
     {
         move.direction = direction;

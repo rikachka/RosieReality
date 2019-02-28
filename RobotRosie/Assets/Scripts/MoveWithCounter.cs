@@ -9,15 +9,24 @@ public class MoveWithCounter : MonoBehaviour
     float COUNTER_SHIFT = 1;
 
     public MoveTile.Type move_type = 0;
-    public Move.Direction move_direction = 0;
 
     public int number_max = 0;
     public int number_available = 0;
     public bool are_counters_on_the_right = true;
 
     public MoveTile move_tile;
-    public GameObject init_counter;
+    public GameObject init_counter_object;
     Counter[] counter_panel;
+
+    public Move.Direction GetDirection()
+    {
+        return move_tile.GetDirection();
+    }
+
+    public void SetDirection(Move.Direction direction)
+    {
+        move_tile.SetDirection(direction);
+    }
 
     void CreateMoveWithCounter(int x, Counter.Type counter_type)
     {
@@ -25,14 +34,13 @@ public class MoveWithCounter : MonoBehaviour
         float shift = COUNTER_SHIFT + x * COUNTER_SHIFT_FACTOR; 
         if (!are_counters_on_the_right) shift *= -1;
         Vector3 coords = new Vector3(left_top_coords.x + shift, left_top_coords.y, left_top_coords.z);
-        counter_panel[x] = Instantiate(init_counter, coords, new Quaternion()).GetComponent<Counter>();
+        counter_panel[x] = Instantiate(init_counter_object, coords, new Quaternion()).GetComponent<Counter>();
         counter_panel[x].img_type = counter_type;
     }
 
     void CreateMoveWithCounter()
     {
         move_tile.type = move_type;
-        move_tile.SetDirection(move_direction);
 
         counter_panel = new Counter[MAX_POSSIBLE_COUNTERS];
 
@@ -53,7 +61,6 @@ public class MoveWithCounter : MonoBehaviour
     void UpdateMoveWithCounter()
     {
         move_tile.type = move_type;
-        move_tile.SetDirection(move_direction);
 
         UpdateMovesWithCounterOfType(Counter.Type.EMPTY, 0, number_available);
         UpdateMovesWithCounterOfType(Counter.Type.AVAILABLE, number_available, number_max);
