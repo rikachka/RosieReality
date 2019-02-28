@@ -32,7 +32,6 @@ public class MainGame : MonoBehaviour
                 location_button = new Rect(new Vector2(screen_centre_x - 93, 10), new Vector2(200, 30));
                 if (GUI.Button(location_button, "New game"))
                 {
-                    //field.GetComponent<Field>().ClearRobotRoute();
                     CreateNewGame();
                     state = State.GAME;
                 }
@@ -84,7 +83,7 @@ public class MainGame : MonoBehaviour
         Tile.Type[,] tiles_types =
         {
             { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.END },
-            { Tile.Type.PLAYER1, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY },
+            { Tile.Type.PLAYER1, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.PLAYER1 },
             { Tile.Type.PLAYER1, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1, Tile.Type.PLAYER2 },
             { Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.EMPTY, Tile.Type.PLAYER1 },
             { Tile.Type.EMPTY, Tile.Type.START, Tile.Type.PLAYER2, Tile.Type.PLAYER2, Tile.Type.PLAYER1 },
@@ -128,8 +127,8 @@ public class MainGame : MonoBehaviour
     void Start()
     {
         field.GetComponent<Field>().CreateField();
-        //CreateNewGame();
-        CreateSolvedGame();
+        CreateNewGame();
+        //CreateSolvedGame();
     }
 
     // Update is called once per frame

@@ -190,7 +190,12 @@ public class Field : MonoBehaviour
             robot = tile.MoveRobotThrough(robot.direction);
             if (robot.type == Robot.Type.STOP)
             {
-                if (tile.type == Tile.Type.END) return true;
+                if (tile.type == Tile.Type.END
+                        && moves_panel_player_1.GetComponent<MovesPanel>().NumberAvailableMoves() == 0
+                        && moves_panel_player_2.GetComponent<MovesPanel>().NumberAvailableMoves() == 0) 
+                { 
+                    return true; 
+                }
                 return false;
             }
             if (robot.type == Robot.Type.MOVE)

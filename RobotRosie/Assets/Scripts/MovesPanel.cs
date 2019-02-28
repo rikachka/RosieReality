@@ -142,8 +142,18 @@ public class MovesPanel : MonoBehaviour
         }
     }
 
+    public int NumberAvailableMoves()
+    {
+        int number_available_moves = 0;
+        foreach (GameObject panel_elem in panel)
+        {
+            number_available_moves += panel_elem.GetComponent<MoveWithCounter>().number_available;
+        }
+        return number_available_moves;
+    }
+
     // Start is called before the first frame update
-    void Start()
+        void Start()
     {
 
     }
